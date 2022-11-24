@@ -35,5 +35,5 @@ See the classroom instruction and code comments for more details on each of thes
 
 ## MP.1 - Data Buffer Optimization.
 
-* Implemented on the file [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from lines 190 to 198.
+* Implemented on the file [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from lines 67 to 75.
 
