@@ -37,7 +37,7 @@ See the classroom instruction and code comments for more details on each of thes
 
 * Implemented on the file [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from lines 67 to 75.
 
-## Part 2 - Keypoints.
+## MP.2 - Keypoint Detection.
 
 * Implemented over the functions `detKeypointsShiTomasi`,`detKeypointsHarris` and `detKeypointsModern` on the file [matching2D_Student.cpp](src/matching2D_Student.cpp) from lines 9 to 257. And call in the main code [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from line 215 to 232.
 
@@ -47,3 +47,8 @@ file:[img9_BRISK_n=2639_t=46.9851_ms.jpg](210319_output/Detector/BRISK/img9_BRIS
 
 ![alt text |width=450px | align="middle"][image1]
 
+## MP.3 - Keypoint Removal.
+
+* Implemented on the file [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from lines 242 to 255.
+
+The quantity of the remaining points are available on the report file [Descriptor_report.txt](210319_output/Descriptor_report.txt). e.g line 237:`ORB,FREAK,7,66,40.6813`, For ORB Detector feature , the image 7 have 66 keypoints to process on image 7.
