@@ -47,3 +47,8 @@ file:[img9_BRISK_n=2639_t=46.9851_ms.jpg](210319_output/Detector/BRISK/img9_BRIS
 
 ![alt text |width=450px | align="middle"][image1]
 
+## MP.3 - Keypoint Removal.
+
+* Implemented on the file [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from lines 242 to 255.
+
+The quantity of the remaining points are available on the report file [Descriptor_report.txt](210319_output/Descriptor_report.txt). e.g line 237:`ORB,FREAK,7,66,40.6813`, For ORB Detector feature , the image 7 have 66 keypoints to process on image 7.
