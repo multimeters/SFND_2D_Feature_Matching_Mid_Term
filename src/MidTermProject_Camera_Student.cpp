@@ -114,18 +114,18 @@ int main(int argc, const char *argv[])
         
         if (detectorType.compare("SHITOMASI") == 0)
         {
-            detKeypointsShiTomasi(keypoints, imgGray,imgNumber.str(), false);
+            detKeypointsShiTomasi(keypoints, imgGray,imgNumber.str(), false,false);
         }
         else
         {
             if (detectorType.compare("HARRIS") == 0)
             {
-                detKeypointsHarris(keypoints, imgGray,imgNumber.str(), false);
+                detKeypointsHarris(keypoints, imgGray,imgNumber.str(), false,false);
             }
             else
             {
 
-                detKeypointsModern(keypoints, imgGray, detectorType,imgNumber.str(),false);
+                detKeypointsModern(keypoints, imgGray, detectorType,imgNumber.str(),false,false);
             }
             
         }

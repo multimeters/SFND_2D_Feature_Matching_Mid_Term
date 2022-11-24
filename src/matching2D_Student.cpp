@@ -132,7 +132,7 @@ void descKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, cv::Mat &descr
 }
 
 // Detect keypoints in image using the traditional Shi-Thomasi detector
-void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string index, bool bVis)
+void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string index, bool bVis,bool bSave)
 {
     // compute detector parameters based on image size
     int blockSize = 4;       //  size of an average block for computing a derivative covariation matrix over each pixel neighborhood
@@ -163,13 +163,16 @@ void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string 
     //cout << "Shi-Tomasi detection with n=" << keypoints.size() << " keypoints in " << 1000 * t / 1.0 << " ms" << endl;
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
   
-    string dir_name="../MP2_KeypointDetection_images/SHITOMASI";
-    std::stringstream ss;
-    ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
-    std::string str = ss.str();
-    cv::Mat visImage = img.clone();
-    cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
-    cv::imwrite(dir_name+"/SHITOMASI_"+index+ "_n="+to_string(keypoints.size())+"_t="+str +"ms"+ ".png",visImage);
+    if(bSave)
+    {
+        string dir_name="../MP2_KeypointDetection_images/SHITOMASI";
+        std::stringstream ss;
+        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
+        std::string str = ss.str();
+        cv::Mat visImage = img.clone();
+        cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+        cv::imwrite(dir_name+"/SHITOMASI_"+index+ "_n="+to_string(keypoints.size())+"_t="+str +"ms"+ ".png",visImage);
+    }
     // visualize results
     if (bVis)
     {
@@ -182,7 +185,7 @@ void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string 
     }
 }
 // Detect keypoints in image using the traditional herris detector
-void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, string index,bool bVis)
+void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, string index,bool bVis,bool bSave)
 {
     // Detector parameters
     int blockSize = 2;     // for every pixel, a blockSize × blockSize neighborhood is considered
@@ -247,14 +250,16 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, stri
     }     // eof loop over rows
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
   
-    string dir_name="../MP2_KeypointDetection_images/HARRIS";
-    std::stringstream ss;
-    ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
-    std::string str = ss.str();
-    cv::Mat visImage = img.clone();
-    cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
-    cv::imwrite(dir_name+"/HARRIS_"+index+ "_n="+to_string(keypoints.size())+"_t="+str +"ms"+ ".png",visImage);	
-
+    if(bSave)
+    {
+        string dir_name="../MP2_KeypointDetection_images/HARRIS";
+        std::stringstream ss;
+        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
+        std::string str = ss.str();
+        cv::Mat visImage = img.clone();
+        cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+        cv::imwrite(dir_name+"/HARRIS_"+index+ "_n="+to_string(keypoints.size())+"_t="+str +"ms"+ ".png",visImage);	
+    }
     // visualize results
     if (bVis)
     {
@@ -266,7 +271,7 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, stri
         cv::waitKey(0); 
     }
 }
-void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std::string detectorType,string index, bool bVis)
+void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std::string detectorType,string index, bool bVis,bool bSave)
 {
     cv::Ptr<cv::FeatureDetector> detector;
     if(detectorType.compare("FAST") == 0)
@@ -323,15 +328,17 @@ void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std:
     double t = (double)cv::getTickCount();
     detector->detect(img,keypoints);
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
-    //cout << "Shi-Tomasi detection with n=" << keypoints.size() << " keypoints in " << 1000 * t / 1.0 << " ms" << endl;
-    string dir_name="../MP2_KeypointDetection_images/"+detectorType;
-    std::stringstream ss;
-    ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
-    std::string str = ss.str();
-    cv::Mat visImage = img.clone();
-    cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
-    cv::imwrite(dir_name+"/"+detectorType+"_"+index+ "_n="+to_string(keypoints.size())+"_t="+str +"ms"+ ".png",visImage);	
-
+    
+    if(bSave)
+    {
+        string dir_name="../MP2_KeypointDetection_images/"+detectorType;
+        std::stringstream ss;
+        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
+        std::string str = ss.str();
+        cv::Mat visImage = img.clone();
+        cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+        cv::imwrite(dir_name+"/"+detectorType+"_"+index+ "_n="+to_string(keypoints.size())+"_t="+str +"ms"+ ".png",visImage);	
+    }
     // visualize results
     if (bVis)
     {
