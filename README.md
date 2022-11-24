@@ -58,9 +58,9 @@ See the classroom instruction and code comments for more details on each of thes
 
 * Implemented over the functions `detKeypointsShiTomasi`,`detKeypointsHarris` and `detKeypointsModern` on the file [matching2D_Student.cpp](src/matching2D_Student.cpp) from lines 9 to 257. And call in the main code [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from line 215 to 232.
 
-**`Detector:`** All The detectors list was implemented for all [Dataset images](images/KITTI/2011_09_26/image_00/data/) available.The next image is a example of the result.
+* All The detectors list was implemented for all [Dataset images](images/KITTI/2011_09_26/image_00/data/) available.The next image is a example of the result.
 
-file:[0000.png](MP2_KeypointDetection_images/BRISK/0000.png)
+file:[BRISK_0000_n=2757_t=44.879ms.png](MP2_KeypointDetection_images/BRISK/BRISK_0000_n=2757_t=44.879ms.png)
 
 ![alt text |width=450px | align="middle"][image1]
 
