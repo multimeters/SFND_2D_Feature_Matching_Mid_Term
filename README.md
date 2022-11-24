@@ -43,7 +43,7 @@ See the classroom instruction and code comments for more details on each of thes
 
 **`Detector:`** All The detectors list was implemented for all [Dataset images](images/KITTI/2011_09_26/image_00/data/) available.The next image is a example of the result.
 
-file:[img9_BRISK_n=2639_t=46.9851_ms.jpg](210319_output/Detector/BRISK/img9_BRISK_n=2639_t=46.9851_ms.jpg)
+file:[0000.png](MP2_KeypointDetection_images/BRISK/0000.png)
 
 ![alt text |width=450px | align="middle"][image1]
 
