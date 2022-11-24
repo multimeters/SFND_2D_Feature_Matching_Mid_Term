@@ -5,6 +5,10 @@ add_definitions(-std=c++11)
 set(CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
+#SET(CMAKE_BUILD_TYPE "Debug")
+
+#SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb")
+
 project(camera_fusion)
 
 find_package(OpenCV 4.1 REQUIRED)

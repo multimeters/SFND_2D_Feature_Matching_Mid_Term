@@ -260,7 +260,7 @@ void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std:
         int 	thresh = 30;
         int 	octaves = 3;
         float 	patternScale = 1.0f;
-        cv::Ptr<cv::BRISK> detector = cv::BRISK::create(thresh,octaves,patternScale);
+        detector = cv::BRISK::create(thresh,octaves,patternScale);
     }
     else if(detectorType.compare("ORB") == 0)
     {   
@@ -284,7 +284,7 @@ void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std:
         int 	nOctaves = 4;
         int 	nOctaveLayers = 4;
         cv::KAZE::DiffusivityType 	diffusivity = cv::KAZE::DIFF_PM_G2 ;
-        cv::Ptr<cv::AKAZE> detector = cv::AKAZE::create(descriptor_type,descriptor_size,descriptor_channels,threshold,nOctaves,nOctaveLayers,diffusivity);
+        detector = cv::AKAZE::create(descriptor_type,descriptor_size,descriptor_channels,threshold,nOctaves,nOctaveLayers,diffusivity);
     }
     else if(detectorType.compare("SIFT") == 0)
     {   
@@ -293,7 +293,7 @@ void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std:
         double 	contrastThreshold = 0.04;
         double 	edgeThreshold = 10;
         double 	sigma = 1.6 ;
-        cv::Ptr< cv::xfeatures2d::SIFT> detector =  cv::xfeatures2d::SIFT::create(nfeatures,nOctaveLayers,contrastThreshold,edgeThreshold,sigma);
+        detector =  cv::xfeatures2d::SIFT::create(nfeatures,nOctaveLayers,contrastThreshold,edgeThreshold,sigma);
     }
     else
     {

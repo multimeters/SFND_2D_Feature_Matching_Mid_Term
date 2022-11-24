@@ -16,6 +16,10 @@
 #include "dataStructures.h"
 #include "matching2D.hpp"
 
+//#include <io.h>
+#include<sys/stat.h>
+#include "unistd.h"
+
 using namespace std;
 
 /* MAIN PROGRAM */
@@ -41,9 +45,11 @@ int main(int argc, const char *argv[])
     bool bVis = false;            // visualize results
      
     //loop all detectors
-
+    vector<std::string> detStrings={"SHITOMASI","HARRIS", "FAST", "BRISK", "ORB", "AKAZE", "SIFT"};
     /* MAIN LOOP OVER ALL IMAGES */
-    
+    for(int i=0;i<detStrings.size();i++)
+    {
+        string detectorType = detStrings[i];
     for (size_t imgIndex = 0; imgIndex <= imgEndIndex - imgStartIndex; imgIndex++)
     {
         /* LOAD IMAGE INTO BUFFER */
@@ -73,19 +79,20 @@ int main(int argc, const char *argv[])
             dataBuffer[0]=dataBuffer[1];
             dataBuffer[1]=frame;
         }
+        
         //// EOF STUDENT ASSIGNMENT
-        cout << "#1 : LOAD IMAGE INTO BUFFER done" << endl;
+        cout << "#1 : LOAD IMAGE INTO BUFFER done" <<imgIndex<< endl;
 
         /* DETECT IMAGE KEYPOINTS */
 
         // extract 2D keypoints from current image
         vector<cv::KeyPoint> keypoints; // create empty feature list for current image
-        string detectorType = "SHITOMASI";
+        //string detectorType = "SHITOMASI";
 
         //// STUDENT ASSIGNMENT
         //// TASK MP.2 -> add the following keypoint detectors in file matching2D.cpp and enable string-based selection based on detectorType
         //// -> HARRIS, FAST, BRISK, ORB, AKAZE, SIFT
-
+        //break;
         if (detectorType.compare("SHITOMASI") == 0)
         {
             detKeypointsShiTomasi(keypoints, imgGray, false);
@@ -98,10 +105,25 @@ int main(int argc, const char *argv[])
             }
             else
             {
+
                 detKeypointsModern(keypoints, imgGray, detectorType,false);
             }
             
         }
+         
+        string dir_name="../MP2_KeypointDetection_images/"+detectorType;
+        cout<<"folder "<<dir_name<<" named!"<<imgIndex<<endl;
+        if (access(dir_name.c_str(), 0) == -1)	
+        {	if(int re = mkdir(dir_name.c_str(), 0777)==0)
+                cout<<"folder "<<dir_name<<" created!"<<endl;
+            else
+            {
+                cout<<"mkdir folder "<<dir_name<<" failed!";
+            }
+        }  
+        cv::Mat visImage = img.clone();
+        cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+        cv::imwrite(dir_name+"/"+imgNumber.str() + imgFileType,visImage);				
         //// EOF STUDENT ASSIGNMENT
 
         //// STUDENT ASSIGNMENT
@@ -207,6 +229,6 @@ int main(int argc, const char *argv[])
         }
 
     } // eof loop over all images
-
+    }
     return 0;
 }
