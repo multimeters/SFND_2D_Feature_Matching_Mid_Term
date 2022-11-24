@@ -46,6 +46,22 @@ int main(int argc, const char *argv[])
      
     //loop all detectors
     vector<std::string> detStrings={"SHITOMASI","HARRIS", "FAST", "BRISK", "ORB", "AKAZE", "SIFT"};
+    for(int i=0;i<detStrings.size();i++)
+    {
+        string dir_name="../MP2_KeypointDetection_images/"+detStrings[i];
+            
+        if (access(dir_name.c_str(), 0) == -1)	
+        {	
+            if(int re = mkdir(dir_name.c_str(), 0777)==0)
+            {   	
+                cout<<"folder "<<dir_name<<" created!"<<endl;
+            }
+            else
+            {
+                 cout<<"mkdir folder "<<dir_name<<" failed!";
+            }
+        } 
+    } 
     /* MAIN LOOP OVER ALL IMAGES */
     for(int i=0;i<detStrings.size();i++)
     {
@@ -93,37 +109,30 @@ int main(int argc, const char *argv[])
         //// TASK MP.2 -> add the following keypoint detectors in file matching2D.cpp and enable string-based selection based on detectorType
         //// -> HARRIS, FAST, BRISK, ORB, AKAZE, SIFT
         //break;
+        
+
+        
         if (detectorType.compare("SHITOMASI") == 0)
         {
-            detKeypointsShiTomasi(keypoints, imgGray, false);
+            detKeypointsShiTomasi(keypoints, imgGray,imgNumber.str(), false);
         }
         else
         {
             if (detectorType.compare("HARRIS") == 0)
             {
-                detKeypointsHarris(keypoints, imgGray, false);
+                detKeypointsHarris(keypoints, imgGray,imgNumber.str(), false);
             }
             else
             {
 
-                detKeypointsModern(keypoints, imgGray, detectorType,false);
+                detKeypointsModern(keypoints, imgGray, detectorType,imgNumber.str(),false);
             }
             
         }
-         
-        string dir_name="../MP2_KeypointDetection_images/"+detectorType;
-        cout<<"folder "<<dir_name<<" named!"<<imgIndex<<endl;
-        if (access(dir_name.c_str(), 0) == -1)	
-        {	if(int re = mkdir(dir_name.c_str(), 0777)==0)
-                cout<<"folder "<<dir_name<<" created!"<<endl;
-            else
-            {
-                cout<<"mkdir folder "<<dir_name<<" failed!";
-            }
-        }  
-        cv::Mat visImage = img.clone();
-        cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
-        cv::imwrite(dir_name+"/"+imgNumber.str() + imgFileType,visImage);				
+        
+
+       
+        			
         //// EOF STUDENT ASSIGNMENT
 
         //// STUDENT ASSIGNMENT
