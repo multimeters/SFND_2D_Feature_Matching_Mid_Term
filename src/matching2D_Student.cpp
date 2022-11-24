@@ -247,36 +247,59 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, bool
 }
 void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std::string detectorType, bool bVis)
 {
+    cv::Ptr<cv::FeatureDetector> detector;
     if(detectorType.compare("FAST") == 0)
     {
-        int thre=3;
-        cv::Ptr<cv::FastFeatureDetector> detector = cv::FastFeatureDetector::create(thre);
-        detector->detect(img,keypoints);
+        int 	threshold = 10;
+        bool 	nonmaxSuppression = true;
+        cv::FastFeatureDetector::DetectorType 	type = cv::FastFeatureDetector::TYPE_9_16; 
+        detector = cv::FastFeatureDetector::create(threshold,nonmaxSuppression,type);
     }
     else if(detectorType.compare("BRISK") == 0)
     {   
-        int thre=3;
-        cv::Ptr<cv::BRISK> detector = cv::BRISK::create(thre);
-        detector->detect(img,keypoints);
+        int 	thresh = 30;
+        int 	octaves = 3;
+        float 	patternScale = 1.0f;
+        cv::Ptr<cv::BRISK> detector = cv::BRISK::create(thresh,octaves,patternScale);
     }
     else if(detectorType.compare("ORB") == 0)
     {   
-        //int thre=3;
-        cv::Ptr<cv::ORB> detector = cv::ORB::create();
-        detector->detect(img,keypoints);
+        int 	nfeatures = 500;
+        float 	scaleFactor = 1.2f;
+        int 	nlevels = 8;
+        int 	edgeThreshold = 31;
+        int 	firstLevel = 0;
+        int 	WTA_K = 2;
+        cv::ORB::ScoreType 	scoreType = cv::ORB::HARRIS_SCORE;
+        int 	patchSize = 31;
+        int 	fastThreshold = 20 ;
+        detector = cv::ORB::create(nfeatures,scaleFactor,nlevels,edgeThreshold,firstLevel,WTA_K,scoreType,patchSize,fastThreshold);
     }
     else if(detectorType.compare("AKAZE") == 0)
     {   
-        //int thre=3;
-        cv::Ptr<cv::AKAZE> detector = cv::AKAZE::create();
-        detector->detect(img,keypoints);
+	    cv::AKAZE::DescriptorType 	descriptor_type = cv::AKAZE::DESCRIPTOR_MLDB;
+        int 	descriptor_size = 0;
+        int 	descriptor_channels = 3;
+        float 	threshold = 0.001f;
+        int 	nOctaves = 4;
+        int 	nOctaveLayers = 4;
+        cv::KAZE::DiffusivityType 	diffusivity = cv::KAZE::DIFF_PM_G2 ;
+        cv::Ptr<cv::AKAZE> detector = cv::AKAZE::create(descriptor_type,descriptor_size,descriptor_channels,threshold,nOctaves,nOctaveLayers,diffusivity);
     }
     else if(detectorType.compare("SIFT") == 0)
     {   
-        //int thre=3;
-        cv::Ptr< cv::xfeatures2d::SIFT> detector =  cv::xfeatures2d::SIFT::create();
-        detector->detect(img,keypoints);
+        int 	nfeatures = 0;
+        int 	nOctaveLayers = 3;
+        double 	contrastThreshold = 0.04;
+        double 	edgeThreshold = 10;
+        double 	sigma = 1.6 ;
+        cv::Ptr< cv::xfeatures2d::SIFT> detector =  cv::xfeatures2d::SIFT::create(nfeatures,nOctaveLayers,contrastThreshold,edgeThreshold,sigma);
     }
+    else
+    {
+        cout<<"detTypeError"<<endl;
+    }
+    detector->detect(img,keypoints);
     // visualize results
     if (bVis)
     {
