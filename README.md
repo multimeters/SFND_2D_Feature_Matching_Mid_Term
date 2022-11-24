@@ -37,3 +37,13 @@ See the classroom instruction and code comments for more details on each of thes
 
 * Implemented on the file [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from lines 67 to 75.
 
+## Part 2 - Keypoints.
+
+* Implemented over the functions `detKeypointsShiTomasi`,`detKeypointsHarris` and `detKeypointsModern` on the file [matching2D_Student.cpp](src/matching2D_Student.cpp) from lines 9 to 257. And call in the main code [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from line 215 to 232.
+
+**`Detector:`** All The detectors list was implemented for all [Dataset images](images/KITTI/2011_09_26/image_00/data/) available.The next image is a example of the result.
+
+file:[img9_BRISK_n=2639_t=46.9851_ms.jpg](210319_output/Detector/BRISK/img9_BRISK_n=2639_t=46.9851_ms.jpg)
+
+![alt text |width=450px | align="middle"][image1]
+
