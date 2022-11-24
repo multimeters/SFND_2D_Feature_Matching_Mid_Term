@@ -169,7 +169,7 @@ void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string 
     std::string str = ss.str();
     cv::Mat visImage = img.clone();
     cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
-    cv::imwrite(dir_name+"/SHITOMASI_"+index+ "_n="+to_string(keypoints.size())+"_t="+str +" ms"+ ".png",visImage);
+    cv::imwrite(dir_name+"/SHITOMASI_"+index+ "_n="+to_string(keypoints.size())+"_t="+str +"ms"+ ".png",visImage);
     // visualize results
     if (bVis)
     {
@@ -330,7 +330,7 @@ void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std:
     std::string str = ss.str();
     cv::Mat visImage = img.clone();
     cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
-    cv::imwrite(dir_name+"/"+detectorType+"_"+index+ "_n="+to_string(keypoints.size())+"_t="+str +" ms"+ ".png",visImage);	
+    cv::imwrite(dir_name+"/"+detectorType+"_"+index+ "_n="+to_string(keypoints.size())+"_t="+str +"ms"+ ".png",visImage);	
 
     // visualize results
     if (bVis)
