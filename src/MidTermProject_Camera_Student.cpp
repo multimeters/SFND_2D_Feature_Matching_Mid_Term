@@ -46,7 +46,8 @@ int main(int argc, const char *argv[])
 
     bool mp2 = false;
     bool mp3 = false;
-    bool mp4 = true;
+    bool mp4 = false;
+    bool mp5 = true;
     //loop all detectors
    
     vector<pair<string,string>> det_decs_pairs;
@@ -108,6 +109,40 @@ int main(int argc, const char *argv[])
          for(int i=0;i<det_decs_pairs.size();i++)
         {
             string dir_name="../MP4_KeypointDescriptors_images/det_"+det_decs_pairs[i].first;
+                
+            if (access(dir_name.c_str(), 0) == -1)	
+            {	
+                if(int re = mkdir(dir_name.c_str(), 0777)==0)
+                {   	
+                    cout<<"folder "<<dir_name<<" created!"<<endl;
+                }
+                else
+                {
+                    cout<<"mkdir folder "<<dir_name<<" failed!";
+                }
+            } 
+            else
+            {   dir_name=dir_name+"/det_"+det_decs_pairs[i].first+"_decs_"+det_decs_pairs[i].second;
+                if (access(dir_name.c_str(), 0) == -1)	
+                {	
+                    if(int re = mkdir(dir_name.c_str(), 0777)==0)
+                    {   	
+                        cout<<"folder "<<dir_name<<" created!"<<endl;
+                    }
+                    else
+                    {
+                        cout<<"mkdir folder "<<dir_name<<" failed!";
+                    }
+                } 
+            }
+            
+        }  
+    }
+    if(mp5)
+    {
+         for(int i=0;i<det_decs_pairs.size();i++)
+        {
+            string dir_name="../MP5_DescriptorMatching_images/det_"+det_decs_pairs[i].first;
                 
             if (access(dir_name.c_str(), 0) == -1)	
             {	
@@ -294,18 +329,18 @@ int main(int argc, const char *argv[])
                     else
                     {
                         descriptorType_matching = "DES_BINARY"; // DES_BINARY, DES_HOG
-            }
+                    }
                     
                     string selectorType = "SEL_NN";       // SEL_NN, SEL_KNN
 
                     //// STUDENT ASSIGNMENT
                     //// TASK MP.5 -> add FLANN matching in file matching2D.cpp
                     //// TASK MP.6 -> add KNN match selection and perform descriptor distance ratio filtering with t=0.8 in file matching2D.cpp
-                    cout << "###1" << endl;
+                    double t = (double)cv::getTickCount();
                     matchDescriptors((dataBuffer.end() - 2)->keypoints, (dataBuffer.end() - 1)->keypoints,
                                     (dataBuffer.end() - 2)->descriptors, (dataBuffer.end() - 1)->descriptors,
                                     matches, descriptorType_matching, matcherType, selectorType);
-                    cout << "###2" << endl;
+                    t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
                     //// EOF STUDENT ASSIGNMENT
 
                     // store matches in current data frame
@@ -314,6 +349,23 @@ int main(int argc, const char *argv[])
                     cout << "#4 : MATCH KEYPOINT DESCRIPTORS done" << endl;
 
                     // visualize matches between current and previous image
+                    if (mp5)
+                    {
+                        string dir_name_mp5="../MP5_DescriptorMatching_images/det_"+det_decs_pairs[i].first+"/det_"+det_decs_pairs[i].first+"_decs_"+det_decs_pairs[i].second;
+                        cv::Mat matchImg = ((dataBuffer.end() - 1)->cameraImg).clone();
+                        cv::drawMatches((dataBuffer.end() - 2)->cameraImg, (dataBuffer.end() - 2)->keypoints,
+                                        (dataBuffer.end() - 1)->cameraImg, (dataBuffer.end() - 1)->keypoints,
+                                        matches, matchImg,
+                                        cv::Scalar::all(-1), cv::Scalar::all(-1),
+                                        vector<char>(), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+
+                        std::stringstream ss;
+                        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
+                        std::string str = ss.str();
+                        cv::Mat visImage = img.clone();
+                        cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+                        cv::imwrite(dir_name_mp5+"/"+prifex+ "_n="+to_string((dataBuffer.end() - 2)->keypoints.size())+"_t="+str +"ms"+ ".png",matchImg);
+                    }
                     bVis = false;
                     if (bVis)
                     {
