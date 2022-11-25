@@ -3,7 +3,7 @@
 [image1]: ./MP2_KeypointDetection_images/BRISK/BRISK_0000_n=2757_t=44.879ms.png
 [image2]: ./MP3_KeypointRemoval_images/BRISK/BRISK_0000_ntotal=2757_nremoved=2493.png
 [image3]: ./MP4_KeypointDescriptors_images/det_FAST/det_FAST_decs_ORB/FAST_ORB_0000_n=149_t=1.368ms.png
-[image4]: ./images/Descriptor_evaluation.png
+[image4]: ./MP5_DescriptorMatching_images/det_BRISK/det_BRISK_decs_SIFT/BRISK_SIFT_0001_n=264_t=9.117ms.png
 [image5]: ./images/Det_BRISK_Descriptor_evaluation.png
 [image6]: ./images/Det_ORB_Descriptor_evaluation.png
 [image7]: ./images/Det_SIFT_Descriptors_evaluation.png
@@ -83,3 +83,13 @@ file:[BRISK_0000_ntotal=2757_nremoved=2493.png](MP3_KeypointRemoval_images/BRISK
 file:[FAST_ORB_0000_n=149_t=1.368ms.png](MP4_KeypointDescriptors_images/det_FAST/det_FAST_decs_ORB/FAST_ORB_0000_n=149_t=1.368ms.png)
 
 ![alt text |width=450px | align="middle"][image3]
+
+## MP.5 - Descriptor Matching
+
+* Implemented over the function `matchDescriptors`on the file [matching2D_Student.cpp](src/matching2D_Student.cpp) from lines 359 to 480 And call in the main code [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from line 307 to 329.
+
+* All The matching Descriptors list was implemented for all [Dataset images](images/KITTI/2011_09_26/image_00/data/) available.The next image is a example of the result (BRISK+SIFT) mathing points between image 3 and the previous image 2.
+
+file:[BRISK_SIFT_0001_n=264_t=9.117ms.png](MP5_DescriptorMatching_images/det_BRISK/det_BRISK_decs_SIFT/BRISK_SIFT_0001_n=264_t=9.117ms.png)
+
+![alt text |width=450px | align="middle"][image4]
