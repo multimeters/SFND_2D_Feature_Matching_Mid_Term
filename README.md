@@ -68,5 +68,8 @@ file:[BRISK_0000_n=2757_t=44.879ms.png](MP2_KeypointDetection_images/BRISK/BRISK
 
 * Implemented on the file [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from lines 242 to 255.
 
-* The quantity of the remaining points are available on the report file [Descriptor_report.txt](210319_output/Descriptor_report.txt). e.g line 237:`ORB,FREAK,7,66,40.6813`, For ORB Detector feature , the image 7 have 66 keypoints to process on image 7.
+* The next image is a example of the result
+
+file:[BRISK_0000_ntotal=2757_nremoved=2493.png](MP3_KeypointRemoval_images/BRISK/BRISK_0000_ntotal=2757_nremoved=2493.png)
+
 ![alt text |width=450px | align="middle"][image2]
