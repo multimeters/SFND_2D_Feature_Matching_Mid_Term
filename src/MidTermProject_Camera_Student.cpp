@@ -44,9 +44,9 @@ int main(int argc, const char *argv[])
     vector<DataFrame> dataBuffer; // list of data frames which are held in memory at the same time
     bool bVis = false;            // visualize results
 
-    bool mp2 = true;
+    bool mp2 = false;
     bool mp3 = false;
-    bool mp4 = false;
+    bool mp4 = true;
     bool mp5 = false;
     bool mp6 = false;
     //loop all detectors
@@ -120,6 +120,38 @@ int main(int argc, const char *argv[])
                 }
             }
         }
+        for(int i=0;i<det_desc_matc_sel_strings.size();i++)
+        {
+            string dir_name="../MP4_KeypointDescriptors_images/det_"+det_desc_matc_sel_strings[i][0];
+                
+            if (access(dir_name.c_str(), 0) == -1)	
+            {	
+                if(int re = mkdir(dir_name.c_str(), 0777)==0)
+                {   	
+                    cout<<"folder "<<dir_name<<" created!"<<endl;
+                }
+                else
+                {
+                    cout<<"mkdir folder "<<dir_name<<" failed!";
+                }
+            } 
+            else
+            {   dir_name=dir_name+"/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][1];
+                if (access(dir_name.c_str(), 0) == -1)	
+                {	
+                    if(int re = mkdir(dir_name.c_str(), 0777)==0)
+                    {   	
+                        cout<<"folder "<<dir_name<<" created!"<<endl;
+                    }
+                    else
+                    {
+                        cout<<"mkdir folder "<<dir_name<<" failed!";
+                    }
+                } 
+            }
+            
+        }  
+
     }
     if(mp5)
     {
@@ -165,37 +197,7 @@ int main(int argc, const char *argv[])
     
     if(mp4)
     {
-         for(int i=0;i<det_desc_matc_sel_strings.size();i++)
-        {
-            string dir_name="../MP4_KeypointDescriptors_images/det_"+det_desc_matc_sel_strings[i][0];
-                
-            if (access(dir_name.c_str(), 0) == -1)	
-            {	
-                if(int re = mkdir(dir_name.c_str(), 0777)==0)
-                {   	
-                    cout<<"folder "<<dir_name<<" created!"<<endl;
-                }
-                else
-                {
-                    cout<<"mkdir folder "<<dir_name<<" failed!";
-                }
-            } 
-            else
-            {   dir_name=dir_name+"/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][0];
-                if (access(dir_name.c_str(), 0) == -1)	
-                {	
-                    if(int re = mkdir(dir_name.c_str(), 0777)==0)
-                    {   	
-                        cout<<"folder "<<dir_name<<" created!"<<endl;
-                    }
-                    else
-                    {
-                        cout<<"mkdir folder "<<dir_name<<" failed!";
-                    }
-                } 
-            }
-            
-        }  
+         
     }
     if(mp5)
     {
@@ -363,8 +365,8 @@ int main(int argc, const char *argv[])
                 //string descriptorType = "BRISK"; // BRIEF, ORB, FREAK, AKAZE, SIFT
                 string descriptorType= det_desc_matc_sel_strings[i][1];
                 //cout<<det_decs_pairs[i].first<<" "<<det_decs_pairs[i].second<<" "<<imgNumber.str()<<endl;
-                string prifex=det_desc_matc_sel_strings[i][0]+"_"+det_desc_matc_sel_strings[i][0]+"_"+imgNumber.str();
-                string dir_name="../MP4_KeypointDescriptors_images/det_"+det_desc_matc_sel_strings[i][0]+"/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][0];
+                string prifex=det_desc_matc_sel_strings[i][0]+"_"+det_desc_matc_sel_strings[i][1]+"_"+imgNumber.str();
+                string dir_name="../MP4_KeypointDescriptors_images/det_"+det_desc_matc_sel_strings[i][0]+"/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][1];
                 descKeypoints((dataBuffer.end() - 1)->keypoints, (dataBuffer.end() - 1)->cameraImg, descriptors, descriptorType,dir_name,prifex,mp4);
                 //// EOF STUDENT ASSIGNMENT
                 

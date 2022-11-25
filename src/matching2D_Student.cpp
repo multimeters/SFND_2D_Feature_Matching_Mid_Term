@@ -16,7 +16,7 @@ void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::Key
         //int normType = cv::NORM_HAMMING;
         int normType = descriptorType.compare("DES_BINARY") == 0 ? cv::NORM_HAMMING : cv::NORM_L2;
         matcher = cv::BFMatcher::create(normType, crossCheck);
-        cout << "MAT_BF matching";
+        cout << "MAT_BF matching"<<endl;
     }
     else if (matcherType.compare("MAT_FLANN") == 0)
     {
@@ -27,7 +27,7 @@ void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::Key
             descRef.convertTo(descRef, CV_32F);
         }
         matcher = cv::DescriptorMatcher::create(cv::DescriptorMatcher::FLANNBASED);
-        cout << "FLANN matching";
+        cout << "FLANN matching"<<endl;
     }
 
     // perform matching task
@@ -35,7 +35,7 @@ void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::Key
     { // nearest neighbor (best match)
         
         matcher->match(descSource, descRef, matches); // Finds the best match for each descriptor in desc1
-        cout << "SEL_NN matching";
+        cout << "SEL_NN matching"<<endl;
     }
     else if (selectorType.compare("SEL_KNN") == 0)
     { // k nearest neighbors (k=2)
