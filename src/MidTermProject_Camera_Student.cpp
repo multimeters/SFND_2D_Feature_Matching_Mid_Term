@@ -47,8 +47,8 @@ int main(int argc, const char *argv[])
     bool mp2 = false;
     bool mp3 = false;
     bool mp4 = false;
-    bool mp5 = true;
-    bool mp6 = false;
+    bool mp5 = false;
+    bool mp6 = true;
     //loop all detectors
     vector<std::string> det_desc_matc_sel_string;
     vector<vector<std::string>> det_desc_matc_sel_strings;
@@ -197,15 +197,23 @@ int main(int argc, const char *argv[])
     {
         for(int i=0;i<detStrings.size();i++)
         {
+            std::string dir_name="../MP6_DescriptorDistanceRatio_images/det_"+detStrings[i];
+            int re = mkdir(dir_name.c_str(), 0777);
             for(int j=0;j<decsStrings.size();j++)
             {
                 
                 if(detStrings[i]=="AKAZE" || decsStrings[j]!="AKAZE" && !(detStrings[i]=="SIFT" && decsStrings[j]=="ORB"))
                 {
+                    std::string dir_name1=dir_name+"/det_"+detStrings[i]+"_decs_"+decsStrings[j];
+                    re = mkdir(dir_name1.c_str(), 0777);
                     for(int m=0;m<matcherStrings.size();m++)
                     {
+                        std::string dir_name2=dir_name1+"/det_"+detStrings[i]+"_decs_"+decsStrings[j]+"_"+matcherStrings[m];
+                        re = mkdir(dir_name2.c_str(), 0777);
                         for(int n=0;n<selectorStrings.size();n++)
                         {
+                            std::string dir_name3=dir_name2+"/det_"+detStrings[i]+"_decs_"+decsStrings[j]+"_"+matcherStrings[m]+"_"+matcherStrings[n];
+                           re = mkdir(dir_name3.c_str(), 0777);
                             det_desc_matc_sel_string={detStrings[i],decsStrings[j],matcherStrings[m],selectorStrings[n]};
                             det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
                         }  
@@ -414,6 +422,27 @@ int main(int argc, const char *argv[])
                         cv::Mat visImage = img.clone();
                         cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
                         cv::imwrite(dir_name_mp5+"/"+prifex_mp5+ "_n="+to_string(matches.size())+"_t="+str +"ms"+ ".png",matchImg);
+                    }
+                    if (mp6)
+                    {
+                        string dir_name_mp6="../MP6_DescriptorDistanceRatio_images/det_"+det_desc_matc_sel_strings[i][0]+
+                                            "/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][1]+
+                                            "/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][1]+"_"+det_desc_matc_sel_strings[i][2]+  
+                                            "/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][1]+"_"+det_desc_matc_sel_strings[i][2]+"_"+det_desc_matc_sel_strings[i][3];                                
+                        string prifex_mp6="/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][1]+"_"+det_desc_matc_sel_strings[i][2]+"_"+det_desc_matc_sel_strings[i][3];                          
+                        cv::Mat matchImg = ((dataBuffer.end() - 1)->cameraImg).clone();
+                        cv::drawMatches((dataBuffer.end() - 2)->cameraImg, (dataBuffer.end() - 2)->keypoints,
+                                        (dataBuffer.end() - 1)->cameraImg, (dataBuffer.end() - 1)->keypoints,
+                                        matches, matchImg,
+                                        cv::Scalar::all(-1), cv::Scalar::all(-1),
+                                        vector<char>(), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+
+                        std::stringstream ss;
+                        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
+                        std::string str = ss.str();
+                        cv::Mat visImage = img.clone();
+                        cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+                        cv::imwrite(dir_name_mp6+"/"+prifex_mp6+ "_n="+to_string(matches.size())+"_t="+str +"ms"+ ".png",matchImg);
                     }
                     bVis = false;
                     if (bVis)
