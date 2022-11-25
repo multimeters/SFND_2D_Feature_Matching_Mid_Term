@@ -88,7 +88,7 @@ file:[FAST_ORB_0000_n=149_t=1.368ms.png](MP4_KeypointDescriptors_images/det_FAST
 
 * Implemented over the function `matchDescriptors`on the file [matching2D_Student.cpp](src/matching2D_Student.cpp) from lines 359 to 480 And call in the main code [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from line 307 to 329.
 
-* All The matching Descriptors list was implemented for all [Dataset images](images/KITTI/2011_09_26/image_00/data/) available.The next image is a example of the result (BRISK+SIFT) mathing points between image 3 and the previous image 2.
+* All The matching Descriptors list was implemented for all [Dataset images](images/KITTI/2011_09_26/image_00/data/) available.The next image is a example of the result (BRISK+SIFT) mathing points between image 1 and the previous image 0.
 
 file:[BRISK_SIFT_0001_n=264_t=9.117ms.png](MP5_DescriptorMatching_images/det_BRISK/det_BRISK_decs_SIFT/BRISK_SIFT_0001_n=264_t=9.117ms.png)
 
