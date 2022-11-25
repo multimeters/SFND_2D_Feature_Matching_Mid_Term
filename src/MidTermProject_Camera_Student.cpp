@@ -44,9 +44,9 @@ int main(int argc, const char *argv[])
     vector<DataFrame> dataBuffer; // list of data frames which are held in memory at the same time
     bool bVis = false;            // visualize results
 
-    bool mp2 = false;
+    bool mp2 = true;
     bool mp3 = false;
-    bool mp4 = true;
+    bool mp4 = false;
     bool mp5 = false;
     bool mp6 = false;
     //loop all detectors
@@ -61,7 +61,7 @@ int main(int argc, const char *argv[])
         for(int i=0;i<detStrings.size();i++)
         {
             
-            det_desc_matc_sel_string={detStrings[i],"BRISK","MAT_BF","SEL_NN"};
+            det_desc_matc_sel_string={detStrings[i],"BRISK","MAT_FLANN","SEL_KNN"};
             det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
         }
          for(int i=0;i<det_desc_matc_sel_strings.size();i++)
@@ -170,13 +170,19 @@ int main(int argc, const char *argv[])
     {
         for(int i=0;i<detStrings.size();i++)
         {
+            std::string dir_name="../MP5_DescriptorMatching_images/det_"+detStrings[i];
+            int re = mkdir(dir_name.c_str(), 0777);
             for(int j=0;j<decsStrings.size();j++)
             {
                 
                 if(detStrings[i]=="AKAZE" || decsStrings[j]!="AKAZE" && !(detStrings[i]=="SIFT" && decsStrings[j]=="ORB"))
                 {
+                    std::string dir_name1=dir_name+"/det_"+detStrings[i]+"_decs_"+decsStrings[j];
+                    re = mkdir(dir_name1.c_str(), 0777);
                     for(int m=0;m<matcherStrings.size();m++)
                     {
+                        std::string dir_name2=dir_name1+"/det_"+detStrings[i]+"_decs_"+decsStrings[j]+"_"+matcherStrings[m];
+                        re = mkdir(dir_name2.c_str(), 0777);
                         det_desc_matc_sel_string={detStrings[i],decsStrings[j],matcherStrings[m],"SEL_NN"};
                         det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
                     }
@@ -184,7 +190,9 @@ int main(int argc, const char *argv[])
                 }
             }
         }
+        
     }
+   
     if(mp6)
     {
         for(int i=0;i<detStrings.size();i++)
@@ -208,44 +216,7 @@ int main(int argc, const char *argv[])
         }
     }
     
-    if(mp4)
-    {
-         
-    }
-    if(mp5)
-    {
-         for(int i=0;i<det_desc_matc_sel_strings.size();i++)
-        {
-            string dir_name="../MP5_DescriptorMatching_images/det_"+det_desc_matc_sel_strings[i][0];
-                
-            if (access(dir_name.c_str(), 0) == -1)	
-            {	
-                if(int re = mkdir(dir_name.c_str(), 0777)==0)
-                {   	
-                    cout<<"folder "<<dir_name<<" created!"<<endl;
-                }
-                else
-                {
-                    cout<<"mkdir folder "<<dir_name<<" failed!";
-                }
-            } 
-            else
-            {   dir_name=dir_name+"/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][0];
-                if (access(dir_name.c_str(), 0) == -1)	
-                {	
-                    if(int re = mkdir(dir_name.c_str(), 0777)==0)
-                    {   	
-                        cout<<"folder "<<dir_name<<" created!"<<endl;
-                    }
-                    else
-                    {
-                        cout<<"mkdir folder "<<dir_name<<" failed!";
-                    }
-                } 
-            }
-            
-        }  
-    }
+    
     /* MAIN LOOP OVER ALL IMAGES */
     for(int i=0;i<det_desc_matc_sel_strings.size();i++)
     {
@@ -298,18 +269,18 @@ int main(int argc, const char *argv[])
                 string detectorType = det_desc_matc_sel_strings[i][0];
                 if (detectorType.compare("SHITOMASI") == 0)
                 {
-                    detKeypointsShiTomasi(keypoints, imgGray,imgNumber.str(), false,mp2);
+                    detKeypointsShiTomasi(keypoints, imgGray,imgNumber.str(), true,mp2);
                 }
                 else
                 {
                     if (detectorType.compare("HARRIS") == 0)
                     {
-                        detKeypointsHarris(keypoints, imgGray,imgNumber.str(), false,mp2);
+                        detKeypointsHarris(keypoints, imgGray,imgNumber.str(), true,mp2);
                     }
                     else
                     {
 
-                        detKeypointsModern(keypoints, imgGray, detectorType,imgNumber.str(),false,mp2);
+                        detKeypointsModern(keypoints, imgGray, detectorType,imgNumber.str(),true,mp2);
                     }
                     
                 }
@@ -394,8 +365,8 @@ int main(int argc, const char *argv[])
                     /* MATCH KEYPOINT DESCRIPTORS */
 
                     vector<cv::DMatch> matches;
-                    string matcherType = det_desc_matc_sel_strings[i][2];        // MAT_BF, MAT_FLANN
-                    string descriptorType_matching;
+                    std::string matcherType = det_desc_matc_sel_strings[i][2];        // MAT_BF, MAT_FLANN
+                    std::string descriptorType_matching;
                     if (descriptorType.compare("SIFT")== 0) 
                     {
                         descriptorType_matching = "DES_HOG"; 
@@ -405,12 +376,13 @@ int main(int argc, const char *argv[])
                         descriptorType_matching = "DES_BINARY"; // DES_BINARY, DES_HOG
                     }
                     
-                    string selectorType = det_desc_matc_sel_strings[i][3];       // SEL_NN, SEL_KNN
+                    std::string selectorType = det_desc_matc_sel_strings[i][3];       // SEL_NN, SEL_KNN
 
                     //// STUDENT ASSIGNMENT
                     //// TASK MP.5 -> add FLANN matching in file matching2D.cpp
                     //// TASK MP.6 -> add KNN match selection and perform descriptor distance ratio filtering with t=0.8 in file matching2D.cpp
                     double t = (double)cv::getTickCount();
+                    cout<<dataBuffer.size()<<descriptorType_matching<<matcherType<<selectorType<<endl;
                     matchDescriptors((dataBuffer.end() - 2)->keypoints, (dataBuffer.end() - 1)->keypoints,
                                     (dataBuffer.end() - 2)->descriptors, (dataBuffer.end() - 1)->descriptors,
                                     matches, descriptorType_matching, matcherType, selectorType);
@@ -425,7 +397,10 @@ int main(int argc, const char *argv[])
                     // visualize matches between current and previous image
                     if (mp5)
                     {
-                        string dir_name_mp5="../MP5_DescriptorMatching_images/det_"+det_desc_matc_sel_strings[i][0]+"/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][0];
+                        string dir_name_mp5="../MP5_DescriptorMatching_images/det_"+det_desc_matc_sel_strings[i][0]+
+                                            "/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][1]+
+                                            "/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][1]+"_"+det_desc_matc_sel_strings[i][2];                                       ;
+                        string prifex_mp5="/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][1]+"_"+det_desc_matc_sel_strings[i][2];                          
                         cv::Mat matchImg = ((dataBuffer.end() - 1)->cameraImg).clone();
                         cv::drawMatches((dataBuffer.end() - 2)->cameraImg, (dataBuffer.end() - 2)->keypoints,
                                         (dataBuffer.end() - 1)->cameraImg, (dataBuffer.end() - 1)->keypoints,
@@ -438,9 +413,9 @@ int main(int argc, const char *argv[])
                         std::string str = ss.str();
                         cv::Mat visImage = img.clone();
                         cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
-                        cv::imwrite(dir_name_mp5+"/"+prifex+ "_n="+to_string((dataBuffer.end() - 2)->keypoints.size())+"_t="+str +"ms"+ ".png",matchImg);
+                        cv::imwrite(dir_name_mp5+"/"+prifex_mp5+ "_n="+to_string((dataBuffer.end() - 2)->keypoints.size())+"_t="+str +"ms"+ ".png",matchImg);
                     }
-                    bVis = false;
+                    bVis = true;
                     if (bVis)
                     {
                         cv::Mat matchImg = ((dataBuffer.end() - 1)->cameraImg).clone();
