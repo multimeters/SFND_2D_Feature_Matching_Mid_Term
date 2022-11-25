@@ -1,7 +1,7 @@
 [//]: # (Image References)
  
 [image1]: ./MP2_KeypointDetection_images/BRISK/BRISK_0000_n=2757_t=44.879ms.png
-[image2]: ./MP2_KeypointRemoval_images/BRISK_0000_ntotal=2757_nremoved=2493.png
+[image2]: ./MP3_KeypointRemoval_images/BRISK_0000_ntotal=2757_nremoved=2493.png
 [image3]: ./210319_output/Matching_Descriptors/Det_BRISK/Det_BRISK_Desc_SIFT/BRISK_SIFT_3_n=193_t=3.39979_ms.jpg
 [image4]: ./images/Descriptor_evaluation.png
 [image5]: ./images/Det_BRISK_Descriptor_evaluation.png
