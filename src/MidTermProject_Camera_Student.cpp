@@ -44,33 +44,29 @@ int main(int argc, const char *argv[])
     vector<DataFrame> dataBuffer; // list of data frames which are held in memory at the same time
     bool bVis = false;            // visualize results
 
-    bool mp2 = false;
+    bool mp2 = true;
     bool mp3 = false;
     bool mp4 = false;
-    bool mp5 = true;
+    bool mp5 = false;
+    bool mp6 = false;
     //loop all detectors
-   
-    vector<pair<string,string>> det_decs_pairs;
+    vector<std::string> det_desc_matc_sel_string;
+    vector<vector<std::string>> det_desc_matc_sel_strings;
     vector<std::string> detStrings={"SHITOMASI","HARRIS", "FAST", "BRISK", "ORB", "AKAZE", "SIFT"};
     vector<std::string> decsStrings={"BRISK","BRIEF", "ORB", "FREAK", "AKAZE", "SIFT"};
-    for(int i=0;i<detStrings.size();i++)
-    {
-        for(int j=0;j<decsStrings.size();j++)
-        {
-            
-            if(detStrings[i]=="AKAZE" || decsStrings[j]!="AKAZE" && !(detStrings[i]=="SIFT" && decsStrings[j]=="ORB"))
-            {
-                pair<string,string> p(detStrings[i],decsStrings[j]);
-                cout<<p.first<<" "<<p.second<<endl;
-                det_decs_pairs.push_back(p);
-            }
-        }
-    }
+    vector<std::string> matcherStrings={"MAT_BF", "MAT_FLANN"};
+    vector<std::string> selectorStrings={"SEL_NN", "SEL_KNN"};
     if(mp2)
     {
         for(int i=0;i<detStrings.size();i++)
         {
-            string dir_name="../MP2_KeypointDetection_images/"+detStrings[i];
+            
+            det_desc_matc_sel_string={detStrings[i],"BRISK","MAT_BF","SEL_NN"};
+            det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
+        }
+         for(int i=0;i<det_desc_matc_sel_strings.size();i++)
+        {
+            string dir_name="../MP2_KeypointDetection_images/"+det_desc_matc_sel_strings[i][0];
                 
             if (access(dir_name.c_str(), 0) == -1)	
             {	
@@ -89,7 +85,13 @@ int main(int argc, const char *argv[])
     {
         for(int i=0;i<detStrings.size();i++)
         {
-            string dir_name="../MP3_KeypointRemoval_images/"+detStrings[i];
+            
+            det_desc_matc_sel_string={detStrings[i],"BRISK","MAT_BF","SEL_NN"};
+            det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
+        }
+        for(int i=0;i<det_desc_matc_sel_strings.size();i++)
+        {
+            string dir_name="../MP3_KeypointRemoval_images/"+det_desc_matc_sel_strings[i][0];
                 
             if (access(dir_name.c_str(), 0) == -1)	
             {	
@@ -106,9 +108,66 @@ int main(int argc, const char *argv[])
     }
     if(mp4)
     {
-         for(int i=0;i<det_decs_pairs.size();i++)
+        for(int i=0;i<detStrings.size();i++)
         {
-            string dir_name="../MP4_KeypointDescriptors_images/det_"+det_decs_pairs[i].first;
+            for(int j=0;j<decsStrings.size();j++)
+            {
+                
+                if(detStrings[i]=="AKAZE" || decsStrings[j]!="AKAZE" && !(detStrings[i]=="SIFT" && decsStrings[j]=="ORB"))
+                {
+                    det_desc_matc_sel_string={detStrings[i],decsStrings[j],"MAT_BF","SEL_NN"};
+                    det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
+                }
+            }
+        }
+    }
+    if(mp5)
+    {
+        for(int i=0;i<detStrings.size();i++)
+        {
+            for(int j=0;j<decsStrings.size();j++)
+            {
+                
+                if(detStrings[i]=="AKAZE" || decsStrings[j]!="AKAZE" && !(detStrings[i]=="SIFT" && decsStrings[j]=="ORB"))
+                {
+                    for(int m=0;m<matcherStrings.size();m++)
+                    {
+                        det_desc_matc_sel_string={detStrings[i],decsStrings[j],matcherStrings[m],"SEL_NN"};
+                        det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
+                    }
+                    
+                }
+            }
+        }
+    }
+    if(mp6)
+    {
+        for(int i=0;i<detStrings.size();i++)
+        {
+            for(int j=0;j<decsStrings.size();j++)
+            {
+                
+                if(detStrings[i]=="AKAZE" || decsStrings[j]!="AKAZE" && !(detStrings[i]=="SIFT" && decsStrings[j]=="ORB"))
+                {
+                    for(int m=0;m<matcherStrings.size();m++)
+                    {
+                        for(int n=0;n<selectorStrings.size();n++)
+                        {
+                            det_desc_matc_sel_string={detStrings[i],decsStrings[j],matcherStrings[m],selectorStrings[n]};
+                            det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
+                        }  
+                    }
+                    
+                }
+            }
+        }
+    }
+    
+    if(mp4)
+    {
+         for(int i=0;i<det_desc_matc_sel_strings.size();i++)
+        {
+            string dir_name="../MP4_KeypointDescriptors_images/det_"+det_desc_matc_sel_strings[i][0];
                 
             if (access(dir_name.c_str(), 0) == -1)	
             {	
@@ -122,7 +181,7 @@ int main(int argc, const char *argv[])
                 }
             } 
             else
-            {   dir_name=dir_name+"/det_"+det_decs_pairs[i].first+"_decs_"+det_decs_pairs[i].second;
+            {   dir_name=dir_name+"/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][0];
                 if (access(dir_name.c_str(), 0) == -1)	
                 {	
                     if(int re = mkdir(dir_name.c_str(), 0777)==0)
@@ -140,9 +199,9 @@ int main(int argc, const char *argv[])
     }
     if(mp5)
     {
-         for(int i=0;i<det_decs_pairs.size();i++)
+         for(int i=0;i<det_desc_matc_sel_strings.size();i++)
         {
-            string dir_name="../MP5_DescriptorMatching_images/det_"+det_decs_pairs[i].first;
+            string dir_name="../MP5_DescriptorMatching_images/det_"+det_desc_matc_sel_strings[i][0];
                 
             if (access(dir_name.c_str(), 0) == -1)	
             {	
@@ -156,7 +215,7 @@ int main(int argc, const char *argv[])
                 }
             } 
             else
-            {   dir_name=dir_name+"/det_"+det_decs_pairs[i].first+"_decs_"+det_decs_pairs[i].second;
+            {   dir_name=dir_name+"/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][0];
                 if (access(dir_name.c_str(), 0) == -1)	
                 {	
                     if(int re = mkdir(dir_name.c_str(), 0777)==0)
@@ -173,7 +232,7 @@ int main(int argc, const char *argv[])
         }  
     }
     /* MAIN LOOP OVER ALL IMAGES */
-    for(int i=0;i<det_decs_pairs.size();i++)
+    for(int i=0;i<det_desc_matc_sel_strings.size();i++)
     {
             dataBuffer.clear();
             for (size_t imgIndex = 0; imgIndex <= imgEndIndex - imgStartIndex; imgIndex++)
@@ -221,7 +280,7 @@ int main(int argc, const char *argv[])
                 //break;
                 
 
-                string detectorType = det_decs_pairs[i].first;
+                string detectorType = det_desc_matc_sel_strings[i][0];
                 if (detectorType.compare("SHITOMASI") == 0)
                 {
                     detKeypointsShiTomasi(keypoints, imgGray,imgNumber.str(), false,mp2);
@@ -302,10 +361,10 @@ int main(int argc, const char *argv[])
 
                 cv::Mat descriptors;
                 //string descriptorType = "BRISK"; // BRIEF, ORB, FREAK, AKAZE, SIFT
-                string descriptorType= det_decs_pairs[i].second;
+                string descriptorType= det_desc_matc_sel_strings[i][1];
                 //cout<<det_decs_pairs[i].first<<" "<<det_decs_pairs[i].second<<" "<<imgNumber.str()<<endl;
-                string prifex=det_decs_pairs[i].first+"_"+det_decs_pairs[i].second+"_"+imgNumber.str();
-                string dir_name="../MP4_KeypointDescriptors_images/det_"+det_decs_pairs[i].first+"/det_"+det_decs_pairs[i].first+"_decs_"+det_decs_pairs[i].second;
+                string prifex=det_desc_matc_sel_strings[i][0]+"_"+det_desc_matc_sel_strings[i][0]+"_"+imgNumber.str();
+                string dir_name="../MP4_KeypointDescriptors_images/det_"+det_desc_matc_sel_strings[i][0]+"/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][0];
                 descKeypoints((dataBuffer.end() - 1)->keypoints, (dataBuffer.end() - 1)->cameraImg, descriptors, descriptorType,dir_name,prifex,mp4);
                 //// EOF STUDENT ASSIGNMENT
                 
@@ -320,7 +379,7 @@ int main(int argc, const char *argv[])
                     /* MATCH KEYPOINT DESCRIPTORS */
 
                     vector<cv::DMatch> matches;
-                    string matcherType = "MAT_BF";        // MAT_BF, MAT_FLANN
+                    string matcherType = det_desc_matc_sel_strings[i][2];        // MAT_BF, MAT_FLANN
                     string descriptorType_matching;
                     if (descriptorType.compare("SIFT")== 0) 
                     {
@@ -331,7 +390,7 @@ int main(int argc, const char *argv[])
                         descriptorType_matching = "DES_BINARY"; // DES_BINARY, DES_HOG
                     }
                     
-                    string selectorType = "SEL_NN";       // SEL_NN, SEL_KNN
+                    string selectorType = det_desc_matc_sel_strings[i][3];       // SEL_NN, SEL_KNN
 
                     //// STUDENT ASSIGNMENT
                     //// TASK MP.5 -> add FLANN matching in file matching2D.cpp
@@ -351,7 +410,7 @@ int main(int argc, const char *argv[])
                     // visualize matches between current and previous image
                     if (mp5)
                     {
-                        string dir_name_mp5="../MP5_DescriptorMatching_images/det_"+det_decs_pairs[i].first+"/det_"+det_decs_pairs[i].first+"_decs_"+det_decs_pairs[i].second;
+                        string dir_name_mp5="../MP5_DescriptorMatching_images/det_"+det_desc_matc_sel_strings[i][0]+"/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][0];
                         cv::Mat matchImg = ((dataBuffer.end() - 1)->cameraImg).clone();
                         cv::drawMatches((dataBuffer.end() - 2)->cameraImg, (dataBuffer.end() - 2)->keypoints,
                                         (dataBuffer.end() - 1)->cameraImg, (dataBuffer.end() - 1)->keypoints,
