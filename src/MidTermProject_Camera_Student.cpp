@@ -212,7 +212,7 @@ int main(int argc, const char *argv[])
                         re = mkdir(dir_name2.c_str(), 0777);
                         for(int n=0;n<selectorStrings.size();n++)
                         {
-                            std::string dir_name3=dir_name2+"/det_"+detStrings[i]+"_decs_"+decsStrings[j]+"_"+matcherStrings[m]+"_"+matcherStrings[n];
+                            std::string dir_name3=dir_name2+"/det_"+detStrings[i]+"_decs_"+decsStrings[j]+"_"+matcherStrings[m]+"_"+selectorStrings[n];
                            re = mkdir(dir_name3.c_str(), 0777);
                             det_desc_matc_sel_string={detStrings[i],decsStrings[j],matcherStrings[m],selectorStrings[n]};
                             det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
