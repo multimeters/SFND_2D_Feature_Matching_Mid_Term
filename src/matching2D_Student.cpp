@@ -16,6 +16,7 @@ void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::Key
         //int normType = cv::NORM_HAMMING;
         int normType = descriptorType.compare("DES_BINARY") == 0 ? cv::NORM_HAMMING : cv::NORM_L2;
         matcher = cv::BFMatcher::create(normType, crossCheck);
+        cout << "MAT_BF matching";
     }
     else if (matcherType.compare("MAT_FLANN") == 0)
     {
@@ -32,8 +33,9 @@ void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::Key
     // perform matching task
     if (selectorType.compare("SEL_NN") == 0)
     { // nearest neighbor (best match)
-
+        
         matcher->match(descSource, descRef, matches); // Finds the best match for each descriptor in desc1
+        cout << "SEL_NN matching";
     }
     else if (selectorType.compare("SEL_KNN") == 0)
     { // k nearest neighbors (k=2)
@@ -57,7 +59,7 @@ void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::Key
 }
 
 // Use one of several types of state-of-art descriptors to uniquely identify keypoints
-void descKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, cv::Mat &descriptors, string descriptorType)
+void descKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, cv::Mat &descriptors, string descriptorType,string path,string index,bool mp4)
 {
     // select appropriate descriptor
     cv::Ptr<cv::DescriptorExtractor> extractor;
@@ -110,7 +112,8 @@ void descKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, cv::Mat &descr
             int 	nOctaves = 4;
             int 	nOctaveLayers = 4;
             cv::KAZE::DiffusivityType 	diffusivity = cv::KAZE::DIFF_PM_G2;
-            cv::AKAZE::create(descriptor_type,descriptor_size,descriptor_channels,threshold,nOctaves,nOctaveLayers);
+            extractor=cv::AKAZE::create(descriptor_type,descriptor_size,descriptor_channels,threshold,nOctaves,nOctaveLayers);
+            //extractor=cv::AKAZE::create();
         }
         else if(descriptorType.compare("SIFT") == 0)
         {
@@ -126,9 +129,21 @@ void descKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, cv::Mat &descr
 
     // perform feature description
     double t = (double)cv::getTickCount();
+
     extractor->compute(img, keypoints, descriptors);
+
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
-    cout << descriptorType << " descriptor extraction in " << 1000 * t / 1.0 << " ms" << endl;
+    
+    if(mp4)
+    {
+        //string dir_name="../MP4_KeypointDescriptors_images/"+descriptorType;
+        std::stringstream ss;
+        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
+        std::string str = ss.str();
+        cv::Mat visImage = img.clone();
+        cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+        cv::imwrite(path+"/"+index+ "_n="+to_string(keypoints.size())+"_t="+str +"ms"+ ".png",visImage);	
+    }
 }
 
 // Detect keypoints in image using the traditional Shi-Thomasi detector
