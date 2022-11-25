@@ -117,6 +117,7 @@ int main(int argc, const char *argv[])
                 {
                     det_desc_matc_sel_string={detStrings[i],decsStrings[j],"MAT_BF","SEL_NN"};
                     det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
+                    cout<<detStrings[i]<<" "<<decsStrings[j]<<endl;
                 }
             }
         }
@@ -134,6 +135,18 @@ int main(int argc, const char *argv[])
                 {
                     cout<<"mkdir folder "<<dir_name<<" failed!";
                 }
+                dir_name=dir_name+"/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][1];
+                if (access(dir_name.c_str(), 0) == -1)	
+                {	
+                    if(int re = mkdir(dir_name.c_str(), 0777)==0)
+                    {   	
+                        cout<<"folder "<<dir_name<<" created!"<<endl;
+                    }
+                    else
+                    {
+                        cout<<"mkdir folder "<<dir_name<<" failed!";
+                    }
+                } 
             } 
             else
             {   dir_name=dir_name+"/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][1];
