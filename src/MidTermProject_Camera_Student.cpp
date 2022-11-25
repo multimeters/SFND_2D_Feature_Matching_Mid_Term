@@ -44,10 +44,10 @@ int main(int argc, const char *argv[])
     vector<DataFrame> dataBuffer; // list of data frames which are held in memory at the same time
     bool bVis = false;            // visualize results
 
-    bool mp2 = true;
+    bool mp2 = false;
     bool mp3 = false;
     bool mp4 = false;
-    bool mp5 = false;
+    bool mp5 = true;
     bool mp6 = false;
     //loop all detectors
     vector<std::string> det_desc_matc_sel_string;
@@ -60,8 +60,8 @@ int main(int argc, const char *argv[])
     {
         for(int i=0;i<detStrings.size();i++)
         {
-            
-            det_desc_matc_sel_string={detStrings[i],"BRISK","MAT_FLANN","SEL_KNN"};
+         
+            det_desc_matc_sel_string={detStrings[i],"BRISK","MAT_BF","SEL_NN"};
             det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
         }
          for(int i=0;i<det_desc_matc_sel_strings.size();i++)
@@ -269,18 +269,18 @@ int main(int argc, const char *argv[])
                 string detectorType = det_desc_matc_sel_strings[i][0];
                 if (detectorType.compare("SHITOMASI") == 0)
                 {
-                    detKeypointsShiTomasi(keypoints, imgGray,imgNumber.str(), true,mp2);
+                    detKeypointsShiTomasi(keypoints, imgGray,imgNumber.str(), false,mp2);
                 }
                 else
                 {
                     if (detectorType.compare("HARRIS") == 0)
                     {
-                        detKeypointsHarris(keypoints, imgGray,imgNumber.str(), true,mp2);
+                        detKeypointsHarris(keypoints, imgGray,imgNumber.str(), false,mp2);
                     }
                     else
                     {
 
-                        detKeypointsModern(keypoints, imgGray, detectorType,imgNumber.str(),true,mp2);
+                        detKeypointsModern(keypoints, imgGray, detectorType,imgNumber.str(),false,mp2);
                     }
                     
                 }
@@ -413,9 +413,9 @@ int main(int argc, const char *argv[])
                         std::string str = ss.str();
                         cv::Mat visImage = img.clone();
                         cv::drawKeypoints(img, keypoints, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
-                        cv::imwrite(dir_name_mp5+"/"+prifex_mp5+ "_n="+to_string((dataBuffer.end() - 2)->keypoints.size())+"_t="+str +"ms"+ ".png",matchImg);
+                        cv::imwrite(dir_name_mp5+"/"+prifex_mp5+ "_n="+to_string(matches.size())+"_t="+str +"ms"+ ".png",matchImg);
                     }
-                    bVis = true;
+                    bVis = false;
                     if (bVis)
                     {
                         cv::Mat matchImg = ((dataBuffer.end() - 1)->cameraImg).clone();
