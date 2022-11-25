@@ -43,25 +43,49 @@ int main(int argc, const char *argv[])
     int dataBufferSize = 2;       // no. of images which are held in memory (ring buffer) at the same time
     vector<DataFrame> dataBuffer; // list of data frames which are held in memory at the same time
     bool bVis = false;            // visualize results
-     
+
+    bool mp2 = false;
+    bool mp3 = true;
     //loop all detectors
     vector<std::string> detStrings={"SHITOMASI","HARRIS", "FAST", "BRISK", "ORB", "AKAZE", "SIFT"};
-    for(int i=0;i<detStrings.size();i++)
+    if(mp2)
     {
-        string dir_name="../MP2_KeypointDetection_images/"+detStrings[i];
-            
-        if (access(dir_name.c_str(), 0) == -1)	
-        {	
-            if(int re = mkdir(dir_name.c_str(), 0777)==0)
-            {   	
-                cout<<"folder "<<dir_name<<" created!"<<endl;
-            }
-            else
-            {
-                 cout<<"mkdir folder "<<dir_name<<" failed!";
-            }
+        for(int i=0;i<detStrings.size();i++)
+        {
+            string dir_name="../MP2_KeypointDetection_images/"+detStrings[i];
+                
+            if (access(dir_name.c_str(), 0) == -1)	
+            {	
+                if(int re = mkdir(dir_name.c_str(), 0777)==0)
+                {   	
+                    cout<<"folder "<<dir_name<<" created!"<<endl;
+                }
+                else
+                {
+                    cout<<"mkdir folder "<<dir_name<<" failed!";
+                }
+            } 
         } 
-    } 
+    }
+    if(mp3)
+    {
+        for(int i=0;i<detStrings.size();i++)
+        {
+            string dir_name="../MP3_KeypointRemoval_images/"+detStrings[i];
+                
+            if (access(dir_name.c_str(), 0) == -1)	
+            {	
+                if(int re = mkdir(dir_name.c_str(), 0777)==0)
+                {   	
+                    cout<<"folder "<<dir_name<<" created!"<<endl;
+                }
+                else
+                {
+                    cout<<"mkdir folder "<<dir_name<<" failed!";
+                }
+            } 
+        } 
+    }
     /* MAIN LOOP OVER ALL IMAGES */
     for(int i=0;i<detStrings.size();i++)
     {
@@ -152,10 +176,18 @@ int main(int argc, const char *argv[])
                     keypoints_temp.push_back(*it);
                 }
             }   
-            keypoints=keypoints_temp;
+            
             //std::cout<<keypoints.size()<<std::endl;
         }
+        if(mp3)
+        {
+            string dir_name="../MP3_KeypointRemoval_images/"+detectorType;
+            cv::Mat visImage = img.clone();
+            cv::drawKeypoints(img, keypoints_temp, visImage, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+            cv::imwrite(dir_name+"/"+detectorType+"_"+imgNumber.str()+ "_ntotal="+to_string(keypoints.size())+"_nremoved="+to_string(keypoints.size()-keypoints_temp.size())+".png",visImage);
+        }
 
+        keypoints=keypoints_temp;
         //// EOF STUDENT ASSIGNMENT
 
         // optional : limit number of keypoints (helpful for debugging and learning)
