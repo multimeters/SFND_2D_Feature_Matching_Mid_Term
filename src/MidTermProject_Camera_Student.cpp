@@ -47,8 +47,8 @@ int main(int argc, const char *argv[])
     bool mp2 = false;
     bool mp3 = false;
     bool mp4 = false;
-    bool mp5 = false;
-    bool mp6 = true;
+    bool mp5 = true;
+    bool mp6 = false;
     //loop all detectors
     vector<std::string> det_desc_matc_sel_string;
     vector<vector<std::string>> det_desc_matc_sel_strings;
@@ -183,7 +183,7 @@ int main(int argc, const char *argv[])
                     {
                         std::string dir_name2=dir_name1+"/det_"+detStrings[i]+"_decs_"+decsStrings[j]+"_"+matcherStrings[m];
                         re = mkdir(dir_name2.c_str(), 0777);
-                        det_desc_matc_sel_string={detStrings[i],decsStrings[j],matcherStrings[m],"SEL_NN"};
+                        det_desc_matc_sel_string={detStrings[i],decsStrings[j],"MAT_FLANN","SEL_KNN"};
                         det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
                     }
                     
