@@ -112,7 +112,7 @@ file:[det_ORB_decs_ORB_MAT_FLANN_n=39_t=3.332ms.png](MP5_DescriptorMatching_imag
 
 ![alt text |width=250px | align="middle"][image6]    
 
-* The following histogram shows the distribution of the neighborhood size of all detectors that implement on all 10 images.
+* The following histogram shows the distribution of the neighborhood size of 10 images' key points with different detectors.
 
 ![alt text |width=250px | align="middle"][image7]   
     
