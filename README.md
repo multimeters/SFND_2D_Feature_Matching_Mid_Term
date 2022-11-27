@@ -90,7 +90,7 @@ For the complete data, please check the file: [Detector_Evaluation](MP7_Performa
 
 ## MP.8 - Performance Evaluation 2.
     
-**TA** count the number of matched keypoints for all 10 images using all possible combinations of detectors and descriptors. In the matching step, use the BF approach with the descriptor distance ratio set to 0.8.
+**Task** count the number of matched keypoints for all 10 images using all possible combinations of detectors and descriptors. In the matching step, use the BF approach with the descriptor distance ratio set to 0.8.
 * Average computation time (detector,descriptor) and average keypoints number under different combinations (Sort in ascending computation time order)
 
 | **Detector+Descriptor** | **MatchedKeyPoints** |
