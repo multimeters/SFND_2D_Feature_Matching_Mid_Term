@@ -6,7 +6,7 @@
 [image4]: ./MP5_DescriptorMatching_images/det_BRISK/det_BRISK_decs_SIFT/det_BRISK_decs_SIFT_MAT_FLANN/det_BRISK_decs_SIFT_MAT_FLANN_n=168_t=7.533ms.png
 [image5]: ./MP5_DescriptorMatching_images/det_ORB/det_ORB_decs_ORB/det_ORB_decs_ORB_MAT_FLANN/det_ORB_decs_ORB_MAT_FLANN_n=39_t=3.332ms.png
 [image6]: ./MP7_PerformanceEvaluation1/mp7-1.png
-[image7]: ./images/Det_SIFT_Descriptors_evaluation.png
+[image7]: ./MP7_PerformanceEvaluation1/mp7_2.bmp
 [image8]: ./images/Det_FAST_Descriptors_evaluation.png
 [image9]: ./images/Descriptor_BRIEF_Detectors_evaluation.png
 
@@ -110,29 +110,12 @@ file:[det_ORB_decs_ORB_MAT_FLANN_n=39_t=3.332ms.png](MP5_DescriptorMatching_imag
 
 * The next scatter plot shows the distribuion of the detected keypoints on the preceding vehicle and time elapsed.
 
-![alt text |width=450px | align="middle"][image6]    
+![alt text |width=250px | align="middle"][image6]    
+
+* The next scatter plot shows the distribuion of the detected keypoints on the preceding vehicle and time elapsed.
+
+![alt text |width=250px | align="middle"][image7]   
     
-The next table shows the meaning of total keypoints detected in the scene on the column `keypoints` and the remaining points on the preceding vehicle on the column `pc`, the meaning of the distribution of the neighborhood size is the column `nhs`.
-<br />      
-<table>
-<tr><th><center> Meaning values over the 10 images. <center><th></tr>
-<tr><td>
-
- 
-| Detector   |  keypoints  |  time   |  pc  |  nhs  |
-|:----------:|:-----------:|:-------:|:----:|:-----:|
-| AKAZE      |    1342     | 129.023 | 167  |   7   |
-| BRISK      |    2711     | 48.5482 | 276  |  21   |
-| FAST       |    1787     | 1.05449 | 149  |   7   |
-| HARRIS     |     173     | 19.6915 |  24  |   6   |
-| ORB        |     500     | 8.49676 | 116  |  56   |
-| SHITOMASI  |    1342     | 21.8832 | 117  |   4   |
-| SIFT       |    1386     | 179.739 | 138  |   5   |
-
-</td></tr> 
-</table>     
-<br />  
- 
 The BRISK feature detect a higher number of the Keypoints in a short elapsed time. the FAST feature shows capable to be fast and detect a good number of keypoints comparing with the others features.
     
 For the complete evaluation, please check the `notebook file`: [Detector_Evaluation](Detector_Evaluation.ipynb)
