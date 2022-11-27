@@ -33,7 +33,7 @@ file:[BRISK_0000_n=2757_t=47.649ms.png](MP2_KeypointDetection_images/BRISK/BRISK
 
 ## MP.3 - Keypoint Removal.
 **TASK:** Remove all keypoints outside of a pre-defined rectangle and only use the keypoints within the rectangle for further processing.
-* Implemented on the file [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from lines 242 to 255.
+* Implemented on the file [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from lines 329 to 341.
 
 * The next image is a example of the result
 
