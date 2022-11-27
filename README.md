@@ -6,7 +6,7 @@
 [image4]: ./MP5_DescriptorMatching_images/det_BRISK/det_BRISK_decs_SIFT/det_BRISK_decs_SIFT_MAT_FLANN/det_BRISK_decs_SIFT_MAT_FLANN_n=168_t=7.533ms.png
 [image5]: ./MP5_DescriptorMatching_images/det_ORB/det_ORB_decs_ORB/det_ORB_decs_ORB_MAT_FLANN/det_ORB_decs_ORB_MAT_FLANN_n=39_t=3.332ms.png
 [image6]: ./MP7_PerformanceEvaluation1/mp7-1.png
-[image7]: ./MP7_PerformanceEvaluation1/mp7_2.bmp
+[image7]: ./MP7_PerformanceEvaluation1/mp7-2.png
 [image8]: ./images/Det_FAST_Descriptors_evaluation.png
 [image9]: ./images/Descriptor_BRIEF_Detectors_evaluation.png
 
