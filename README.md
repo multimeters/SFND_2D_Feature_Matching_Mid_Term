@@ -118,4 +118,4 @@ file:[det_ORB_decs_ORB_MAT_FLANN_n=39_t=3.332ms.png](MP5_DescriptorMatching_imag
     
 
     
-For the complete evaluation, please check the `notebook file`: [Detector_Evaluation](Detector_Evaluation.ipynb)
+For the complete data, please check the file: [Detector_Evaluation](MP7_PerformanceEvaluation1/mp7_1.txt) and file: [Detector_Evaluation](MP7_PerformanceEvaluation1/mp7_2.txt)
