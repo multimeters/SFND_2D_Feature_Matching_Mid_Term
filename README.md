@@ -132,7 +132,7 @@ For the complete data, please check the file: [Detector_Evaluation](MP7_Performa
 | BRISK_BRIEF             | 170.4                |
 
 ## MP.9 - Performance Evaluation 3.
-**TASK:** 
+**TASK:** Log the time it takes for keypoint detection and descriptor extraction. The results must be entered into a spreadsheet and based on this data, the TOP3 detector / descriptor combinations must be recommended as the best choice for our purpose of detecting keypoints on vehicles.
 * Average computation time (detector,descriptor) and  average  keypoints number  under different combinations (Sort in ascending  computation time order)
 
 | **Detector+Descriptor** | **ComputationTime** | **KeypointsNumber** |
