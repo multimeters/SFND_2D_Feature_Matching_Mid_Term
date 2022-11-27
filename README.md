@@ -18,7 +18,7 @@
 # SFND 2D Feature Tracking
 
 ## MP.1 - Data Buffer Optimization.
-
+**TASK:** Implement a vector for dataBuffer objects whose size does not exceed a limit (e.g. 2 elements). This can be achieved by pushing in new elements on one end and removing elements on the other end.
 * Implemented on the file [MidTermProject_Camera_Student.cpp](src/MidTermProject_Camera_Student.cpp) from lines 67 to 75.
 
 ## MP.2 - Keypoint Detection.
