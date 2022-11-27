@@ -110,7 +110,7 @@ file:[det_ORB_decs_ORB_MAT_FLANN_n=39_t=3.332ms.png](MP5_DescriptorMatching_imag
 
 * The next scatter plot shows the distribuion of the detected keypoints on the preceding vehicle and time elapsed.
 
-![alt text |width=450px | align="middle"][image6]    
+![alt text |width=250px | align="middle"][image6]    
 
 * The next scatter plot shows the distribuion of the detected keypoints on the preceding vehicle and time elapsed.
 
