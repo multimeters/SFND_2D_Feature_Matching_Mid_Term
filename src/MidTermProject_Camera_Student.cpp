@@ -47,8 +47,9 @@ int main(int argc, const char *argv[])
     bool mp2 = false;
     bool mp3 = false;
     bool mp4 = false;
-    bool mp5 = true;
+    bool mp5 = false;
     bool mp6 = false;
+    bool mp7 = true;
     //loop all detectors
     vector<std::string> det_desc_matc_sel_string;
     vector<vector<std::string>> det_desc_matc_sel_strings;
@@ -192,7 +193,7 @@ int main(int argc, const char *argv[])
         }
         
     }
-   
+
     if(mp6)
     {
         for(int i=0;i<detStrings.size();i++)
@@ -224,7 +225,23 @@ int main(int argc, const char *argv[])
         }
     }
     
-    
+    if(mp7)
+    {
+        for(int i=0;i<detStrings.size();i++)
+        {
+         
+            det_desc_matc_sel_string={detStrings[i],"BRISK","MAT_BF","SEL_NN"};
+            det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
+        }
+        std::string rmseFile = "../MP7_PerformanceEvaluation1/out.txt";
+        if (access(rmseFile.c_str(), 0) == 0) 
+        {
+            remove(rmseFile.c_str());
+        }
+  
+
+
+    }
     /* MAIN LOOP OVER ALL IMAGES */
     for(int i=0;i<det_desc_matc_sel_strings.size();i++)
     {
@@ -277,23 +294,23 @@ int main(int argc, const char *argv[])
                 string detectorType = det_desc_matc_sel_strings[i][0];
                 if (detectorType.compare("SHITOMASI") == 0)
                 {
-                    detKeypointsShiTomasi(keypoints, imgGray,imgNumber.str(), false,mp2);
+                    detKeypointsShiTomasi(keypoints, imgGray,imgNumber.str(), false,mp2,mp7);
                 }
                 else
                 {
                     if (detectorType.compare("HARRIS") == 0)
                     {
-                        detKeypointsHarris(keypoints, imgGray,imgNumber.str(), false,mp2);
+                        detKeypointsHarris(keypoints, imgGray,imgNumber.str(), false,mp2,mp7);
                     }
                     else
                     {
 
-                        detKeypointsModern(keypoints, imgGray, detectorType,imgNumber.str(),false,mp2);
+                        detKeypointsModern(keypoints, imgGray, detectorType,imgNumber.str(),false,mp2,mp7);
                     }
                     
                 }
                 
-
+                
             
                             
                 //// EOF STUDENT ASSIGNMENT
@@ -317,6 +334,24 @@ int main(int argc, const char *argv[])
                     }   
                     
                     //std::cout<<keypoints.size()<<std::endl;
+                }
+                double average_size = 0;
+                double total_size = 0;
+                for (auto kp : keypoints_temp) {
+                    total_size += kp.size;
+                }
+                average_size = total_size/ (float)keypoints_temp.size();
+                std::stringstream ss;
+                ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) <<  average_size ;
+                std::string str = ss.str();
+                if(mp7)
+                {
+                    string dir_name="../MP7_PerformanceEvaluation1/out.txt";
+                    ofstream out;
+                    out.open(dir_name,std::ios_base::app);
+                    out << " "<<to_string(keypoints_temp.size())<<" "<<str<<"\n";
+                    //out << "This is another line.\n";
+                    out.close();   
                 }
                 if(mp3)
                 {

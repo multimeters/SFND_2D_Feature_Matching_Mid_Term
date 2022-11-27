@@ -1,6 +1,6 @@
 #include <numeric>
 #include "matching2D.hpp"
-
+#include <fstream>
 using namespace std;
 
 // Find best matches for keypoints in two camera images based on several matching methods
@@ -153,7 +153,7 @@ void descKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, cv::Mat &descr
 }
 
 // Detect keypoints in image using the traditional Shi-Thomasi detector
-void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string index, bool bVis,bool bSave)
+void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string index, bool bVis,bool bSave,bool mp7)
 {
     // compute detector parameters based on image size
     int blockSize = 4;       //  size of an average block for computing a derivative covariation matrix over each pixel neighborhood
@@ -184,6 +184,21 @@ void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string 
     //cout << "Shi-Tomasi detection with n=" << keypoints.size() << " keypoints in " << 1000 * t / 1.0 << " ms" << endl;
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
   
+    if(mp7)
+    {
+        std::stringstream ss;
+        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
+        std::string str = ss.str();
+
+        string dir_name="../MP7_PerformanceEvaluation1/out.txt";
+        ofstream out;
+        out.open(dir_name,std::ios_base::app);
+        out << "SHITOMASI "<<index<<" "<<to_string(keypoints.size())<<" "<<str;
+        //out << "This is another line.\n";
+        out.close();    
+    }
+   
+
     if(bSave)
     {
         string dir_name="../MP2_KeypointDetection_images/SHITOMASI";
@@ -206,7 +221,7 @@ void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string 
     }
 }
 // Detect keypoints in image using the traditional herris detector
-void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, string index,bool bVis,bool bSave)
+void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, string index,bool bVis,bool bSave,bool mp7)
 {
     // Detector parameters
     int blockSize = 2;     // for every pixel, a blockSize × blockSize neighborhood is considered
@@ -270,7 +285,19 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, stri
         } // eof loop over cols
     }     // eof loop over rows
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
-  
+    if(mp7)
+    {
+        std::stringstream ss;
+        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
+        std::string str = ss.str();
+
+        string dir_name="../MP7_PerformanceEvaluation1/out.txt";
+        ofstream out;
+        out.open(dir_name,std::ios_base::app);
+        out << "HARRIS "<<index<<" "<<to_string(keypoints.size())<<" "<<str;
+        //out << "This is another line.\n";
+        out.close();    
+    }
     if(bSave)
     {
         string dir_name="../MP2_KeypointDetection_images/HARRIS";
@@ -292,7 +319,7 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, stri
         cv::waitKey(0); 
     }
 }
-void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std::string detectorType,string index, bool bVis,bool bSave)
+void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std::string detectorType,string index, bool bVis,bool bSave,bool mp7)
 {
     cv::Ptr<cv::FeatureDetector> detector;
     if(detectorType.compare("FAST") == 0)
@@ -349,7 +376,18 @@ void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std:
     double t = (double)cv::getTickCount();
     detector->detect(img,keypoints);
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
-    
+    if(mp7)
+    {
+        std::stringstream ss;
+        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
+        std::string str = ss.str();
+
+        string dir_name="../MP7_PerformanceEvaluation1/out.txt";
+        ofstream out;
+        out.open(dir_name,std::ios_base::app);
+        out << detectorType<<" "<<index<<" "<<to_string(keypoints.size())<<" "<<str;
+        //out << "This is another line.\n";
+    }
     if(bSave)
     {
         string dir_name="../MP2_KeypointDetection_images/"+detectorType;
