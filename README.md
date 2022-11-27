@@ -114,7 +114,7 @@ file:[det_ORB_decs_ORB_MAT_FLANN_n=39_t=3.332ms.png](MP5_DescriptorMatching_imag
 
 * The next scatter plot shows the distribuion of the detected keypoints on the preceding vehicle and time elapsed.
 
-![alt text |width=450px | align="middle"][image7]   
+![alt text |width=250px | align="middle"][image7]   
     
 The BRISK feature detect a higher number of the Keypoints in a short elapsed time. the FAST feature shows capable to be fast and detect a good number of keypoints comparing with the others features.
     
