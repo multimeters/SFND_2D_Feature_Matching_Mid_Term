@@ -172,3 +172,9 @@ For the complete data, please check the file: [Detector_Evaluation](MP7_Performa
 | AKAZE_FREAK             | 204.0801            | 118.7               |
 | SIFT_SIFT               | 213.153             | 80                  |
 | AKAZE_AKAZE             | 249.5201            | 125.9               |
+## Top 3 combinations of detector and descriptor
+Real-time is the most important metric for tracking vehicles. Consider to this factor, the combination has fast speed and highst matched keypoins will be the best chioce.
+
+- Top1: Detector: FAST, Descriptor: BRIEF (Fastest combination, able to detect sufficient keypoints)
+- Top2: Dectetor: FAST, Descriptor: ORB (higher speed, able to detect sufficient keypoints )
+- Top3: Detector: FAST, Descriptor: BRISK (high speed, able to detect sufficient keypoints )
