@@ -65,7 +65,7 @@ void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::Key
 }
 
 // Use one of several types of state-of-art descriptors to uniquely identify keypoints
-void descKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, cv::Mat &descriptors, string descriptorType,string path,string index,bool mp4)
+void descKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, cv::Mat &descriptors, string descriptorType,string path,string index,string index2,bool mp4,bool mp8)
 {
     // select appropriate descriptor
     cv::Ptr<cv::DescriptorExtractor> extractor;
@@ -139,7 +139,19 @@ void descKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, cv::Mat &descr
     extractor->compute(img, keypoints, descriptors);
 
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
-    
+    if(mp8 && (index2!="0000"))
+    {
+        std::stringstream ss;
+        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
+        std::string str = ss.str();
+
+        string dir_name="../MP8_PerformanceEvaluation2/mp8.txt";
+        ofstream out;
+        out.open(dir_name,std::ios_base::app);
+        out <<" "<<descriptorType<<" "<<str;
+        //out << "This is another line.\n";
+        out.close();    
+    }
     if(mp4)
     {
         //string dir_name="../MP4_KeypointDescriptors_images/"+descriptorType;
@@ -153,7 +165,7 @@ void descKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, cv::Mat &descr
 }
 
 // Detect keypoints in image using the traditional Shi-Thomasi detector
-void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string index, bool bVis,bool bSave,bool mp7)
+void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string index, bool bVis,bool bSave,bool mp7,bool mp8)
 {
     // compute detector parameters based on image size
     int blockSize = 4;       //  size of an average block for computing a derivative covariation matrix over each pixel neighborhood
@@ -184,6 +196,19 @@ void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string 
     //cout << "Shi-Tomasi detection with n=" << keypoints.size() << " keypoints in " << 1000 * t / 1.0 << " ms" << endl;
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
   
+    if(mp8 && (index!="0000"))
+    {
+        std::stringstream ss;
+        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
+        std::string str = ss.str();
+
+        string dir_name="../MP8_PerformanceEvaluation2/mp8.txt";
+        ofstream out;
+        out.open(dir_name,std::ios_base::app);
+        out << "SHITOMASI"<<" "<<str;
+        //out << "This is another line.\n";
+        out.close();    
+    }
     if(mp7)
     {
         std::stringstream ss;
@@ -193,7 +218,7 @@ void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string 
         string dir_name="../MP7_PerformanceEvaluation1/mp7_1.txt";
         ofstream out;
         out.open(dir_name,std::ios_base::app);
-        out << "SHITOMASI "<<index<<" "<<to_string(keypoints.size())<<" "<<str;
+        out << "SHITOMASI"<<index<<" "<<to_string(keypoints.size())<<" "<<str;
         //out << "This is another line.\n";
         out.close();    
     }
@@ -221,7 +246,7 @@ void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string 
     }
 }
 // Detect keypoints in image using the traditional herris detector
-void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, string index,bool bVis,bool bSave,bool mp7)
+void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, string index,bool bVis,bool bSave,bool mp7,bool mp8)
 {
     // Detector parameters
     int blockSize = 2;     // for every pixel, a blockSize × blockSize neighborhood is considered
@@ -285,6 +310,19 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, stri
         } // eof loop over cols
     }     // eof loop over rows
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+    if(mp8 && (index!="0000"))
+    {
+        std::stringstream ss;
+        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
+        std::string str = ss.str();
+
+        string dir_name="../MP8_PerformanceEvaluation2/mp8.txt";
+        ofstream out;
+        out.open(dir_name,std::ios_base::app);
+        out <<"HARRIS"<<" "<<str;
+        //out << "This is another line.\n";
+        out.close();    
+    }
     if(mp7)
     {
         std::stringstream ss;
@@ -319,7 +357,7 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, stri
         cv::waitKey(0); 
     }
 }
-void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std::string detectorType,string index, bool bVis,bool bSave,bool mp7)
+void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std::string detectorType,string index, bool bVis,bool bSave,bool mp7,bool mp8)
 {
     cv::Ptr<cv::FeatureDetector> detector;
     if(detectorType.compare("FAST") == 0)
@@ -376,6 +414,19 @@ void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std:
     double t = (double)cv::getTickCount();
     detector->detect(img,keypoints);
     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+    if(mp8 && (index!="0000"))
+    {
+        std::stringstream ss;
+        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
+        std::string str = ss.str();
+
+        string dir_name="../MP8_PerformanceEvaluation2/mp8.txt";
+        ofstream out;
+        out.open(dir_name,std::ios_base::app);
+        out <<detectorType<<" "<<str;
+        //out << "This is another line.\n";
+        out.close();    
+    }
     if(mp7)
     {
         std::stringstream ss;

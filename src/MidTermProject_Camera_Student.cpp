@@ -49,7 +49,8 @@ int main(int argc, const char *argv[])
     bool mp4 = false;
     bool mp5 = false;
     bool mp6 = false;
-    bool mp7 = true;
+    bool mp7 = false;
+    bool mp8 = true;
     //loop all detectors
     vector<std::string> det_desc_matc_sel_string;
     vector<vector<std::string>> det_desc_matc_sel_strings;
@@ -246,6 +247,28 @@ int main(int argc, const char *argv[])
 
 
     }
+    if(mp8)
+    {
+        for(int i=0;i<detStrings.size();i++)
+        {
+            for(int j=0;j<decsStrings.size();j++)
+            {
+                if(detStrings[i]=="AKAZE" || decsStrings[j]!="AKAZE" && !(detStrings[i]=="SIFT" && decsStrings[j]=="ORB"))
+                {
+                    det_desc_matc_sel_string={detStrings[i],decsStrings[j],"MAT_BF","SEL_KNN"};
+                    det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
+                }
+            }
+        }
+        std::string rmseFile = "../MP8_PerformanceEvaluation2/mp8.txt";
+        if (access(rmseFile.c_str(), 0) == 0) 
+        {
+            remove(rmseFile.c_str());
+        }
+     
+
+
+    }
     /* MAIN LOOP OVER ALL IMAGES */
     for(int i=0;i<det_desc_matc_sel_strings.size();i++)
     {
@@ -298,18 +321,18 @@ int main(int argc, const char *argv[])
                 string detectorType = det_desc_matc_sel_strings[i][0];
                 if (detectorType.compare("SHITOMASI") == 0)
                 {
-                    detKeypointsShiTomasi(keypoints, imgGray,imgNumber.str(), false,mp2,mp7);
+                    detKeypointsShiTomasi(keypoints, imgGray,imgNumber.str(), false,mp2,mp7,mp8);
                 }
                 else
                 {
                     if (detectorType.compare("HARRIS") == 0)
                     {
-                        detKeypointsHarris(keypoints, imgGray,imgNumber.str(), false,mp2,mp7);
+                        detKeypointsHarris(keypoints, imgGray,imgNumber.str(), false,mp2,mp7,mp8);
                     }
                     else
                     {
 
-                        detKeypointsModern(keypoints, imgGray, detectorType,imgNumber.str(),false,mp2,mp7);
+                        detKeypointsModern(keypoints, imgGray, detectorType,imgNumber.str(),false,mp2,mp7,mp8);
                     }
                     
                 }
@@ -405,7 +428,7 @@ int main(int argc, const char *argv[])
                 //cout<<det_decs_pairs[i].first<<" "<<det_decs_pairs[i].second<<" "<<imgNumber.str()<<endl;
                 string prifex=det_desc_matc_sel_strings[i][0]+"_"+det_desc_matc_sel_strings[i][1]+"_"+imgNumber.str();
                 string dir_name="../MP4_KeypointDescriptors_images/det_"+det_desc_matc_sel_strings[i][0]+"/det_"+det_desc_matc_sel_strings[i][0]+"_decs_"+det_desc_matc_sel_strings[i][1];
-                descKeypoints((dataBuffer.end() - 1)->keypoints, (dataBuffer.end() - 1)->cameraImg, descriptors, descriptorType,dir_name,prifex,mp4);
+                descKeypoints((dataBuffer.end() - 1)->keypoints, (dataBuffer.end() - 1)->cameraImg, descriptors, descriptorType,dir_name,prifex,imgNumber.str(),mp4,mp8);
                 //// EOF STUDENT ASSIGNMENT
                 
                 // push descriptors for current frame to end of data buffer
@@ -436,11 +459,24 @@ int main(int argc, const char *argv[])
                     //// TASK MP.5 -> add FLANN matching in file matching2D.cpp
                     //// TASK MP.6 -> add KNN match selection and perform descriptor distance ratio filtering with t=0.8 in file matching2D.cpp
                     double t = (double)cv::getTickCount();
-                    cout<<dataBuffer.size()<<descriptorType_matching<<matcherType<<selectorType<<endl;
+                    //cout<<dataBuffer.size()<<descriptorType_matching<<matcherType<<selectorType<<endl;
                     matchDescriptors((dataBuffer.end() - 2)->keypoints, (dataBuffer.end() - 1)->keypoints,
                                     (dataBuffer.end() - 2)->descriptors, (dataBuffer.end() - 1)->descriptors,
                                     matches, descriptorType_matching, matcherType, selectorType);
                     t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
+                    if(mp8 && (imgNumber.str()!="0000"))
+                    {
+                        string dir_name="../MP8_PerformanceEvaluation2/mp8.txt";
+                        std::stringstream ss;
+                        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
+                        std::string str = ss.str();
+                        ofstream out;
+                        out.open(dir_name,std::ios_base::app);
+                        out <<" "<<to_string(matches.size())<<"\n";
+                        //out << "This is another line.\n";
+                        out.close();   
+
+                    }
                     //// EOF STUDENT ASSIGNMENT
 
                     // store matches in current data frame
