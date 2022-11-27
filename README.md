@@ -106,7 +106,7 @@ file:[det_ORB_decs_ORB_MAT_FLANN_n=39_t=3.332ms.png](MP5_DescriptorMatching_imag
 
 ## MP.7 - Performance Evaluation 1.
     
-* count the number of keypoints on the preceding vehicle for all 10 images and take note of the distribution of their neighborhood size. Do this for all the detectors you have implemented.
+Task:count the number of keypoints on the preceding vehicle for all 10 images and take note of the distribution of their neighborhood size. Do this for all the detectors you have implemented.
 
 * The next scatter plot shows the distribuion of the detected keypoints on the preceding vehicle and time elapsed.As shown in the iamge,the BRISK feature detect a higher number of the Keypoints in a short elapsed time. the FAST feature shows capable to be fast and detect a good number of keypoints comparing with the others features.
 
