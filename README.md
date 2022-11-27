@@ -443,4 +443,43 @@ For the complete data, please check the file: [Detector_Evaluation](MP7_Performa
 | 7                 | 8                 | "SIFT"       | "SIFT"         | 102                      |
 | 8                 | 9                 | "SIFT"       | "SIFT"         | 104                      |
 
+## MP.9 - Performance Evaluation 3.
+* Total computation time(detector,descriptor, matchiing) under different combinations
 
+| **Detector+Descriptor** | **ComputationTime** | **KeypointsNumber** |
+|:-----------------------:|:-------------------:|:-------------------:|
+| FAST_BRIEF              | 2.0997              | 109.9               |
+| FAST_ORB                | 2.3652              | 107.1               |
+| FAST_BRISK              | 2.7521              | 89.9                |
+| ORB_BRIEF               | 9.148               | 54.5                |
+| ORB_BRISK               | 12.0285             | 75.1                |
+| ORB_ORB                 | 19.0127             | 76.3                |
+| SHITOMASI_BRIEF         | 19.1266             | 94.4                |
+| HARRIS_BRIEF            | 19.9661             | 17.3                |
+| HARRIS_ORB              | 20.8743             | 16.2                |
+| SHITOMASI_ORB           | 21.6959             | 90.8                |
+| HARRIS_BRISK            | 24.0256             | 14.2                |
+| SHITOMASI_BRISK         | 26.9768             | 76.7                |
+| FAST_SIFT               | 35.7522             | 104.6               |
+| BRISK_BRIEF             | 36.8287             | 170.4               |
+| SHITOMASI_SIFT          | 37.6537             | 92.7                |
+| BRISK_BRISK             | 40.0579             | 157                 |
+| BRISK_ORB               | 41.5307             | 151.4               |
+| HARRIS_SIFT             | 43.522              | 16.3                |
+| FAST_FREAK              | 57.908              | 87.8                |
+| SHITOMASI_FREAK         | 62.5829             | 76.8                |
+| HARRIS_FREAK            | 71.4491             | 14.4                |
+| ORB_FREAK               | 73.2577             | 42                  |
+| BRISK_FREAK             | 85.2084             | 152.4               |
+| ORB_SIFT                | 103.2322            | 76.3                |
+| BRISK_SIFT              | 104.6372            | 164.6               |
+| AKAZE_BRIEF             | 120.0492            | 126.6               |
+| AKAZE_BRISK             | 125.1874            | 121.5               |
+| AKAZE_ORB               | 133.2668            | 118.2               |
+| AKAZE_SIFT              | 137.2498            | 127                 |
+| SIFT_BRISK              | 145.8045            | 59.2                |
+| SIFT_BRIEF              | 146.445             | 70.2                |
+| SIFT_FREAK              | 191.0153            | 59.3                |
+| AKAZE_FREAK             | 204.0801            | 118.7               |
+| SIFT_SIFT               | 213.153             | 80                  |
+| AKAZE_AKAZE             | 249.5201            | 125.9               |
