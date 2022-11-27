@@ -411,7 +411,7 @@ For the complete data, please check the file: [Detector_Evaluation](MP7_Performa
 | 8                 | 9                 | "SIFT"       | "SIFT"         | 104                      |
 
 ## MP.9 - Performance Evaluation 3.
-* Total computation time and KeypointsNumber per image (detector,descriptor) under different combinations (Sort in ascending chronological order)
+* Average computation time (detector,descriptor) and  average  keypoints number  under different combinations (Sort in ascending  computation time order)
 
 | **Detector+Descriptor** | **ComputationTime** | **KeypointsNumber** |
 |:-----------------------:|:-------------------:|:-------------------:|
