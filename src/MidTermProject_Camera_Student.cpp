@@ -233,12 +233,16 @@ int main(int argc, const char *argv[])
             det_desc_matc_sel_string={detStrings[i],"BRISK","MAT_BF","SEL_NN"};
             det_desc_matc_sel_strings.push_back(det_desc_matc_sel_string);
         }
-        std::string rmseFile = "../MP7_PerformanceEvaluation1/out.txt";
+        std::string rmseFile = "../MP7_PerformanceEvaluation1/mp7_1.txt";
         if (access(rmseFile.c_str(), 0) == 0) 
         {
             remove(rmseFile.c_str());
         }
-  
+        rmseFile = "../MP7_PerformanceEvaluation1/mp7_2.txt";
+        if (access(rmseFile.c_str(), 0) == 0) 
+        {
+            remove(rmseFile.c_str());
+        }
 
 
     }
@@ -335,21 +339,28 @@ int main(int argc, const char *argv[])
                     
                     //std::cout<<keypoints.size()<<std::endl;
                 }
-                double average_size = 0;
-                double total_size = 0;
-                for (auto kp : keypoints_temp) {
-                    total_size += kp.size;
-                }
-                average_size = total_size/ (float)keypoints_temp.size();
-                std::stringstream ss;
-                ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) <<  average_size ;
-                std::string str = ss.str();
+               
+                
                 if(mp7)
                 {
-                    string dir_name="../MP7_PerformanceEvaluation1/out.txt";
+                    string dir_name1="../MP7_PerformanceEvaluation1/mp7_2.txt";
+                    ofstream out1;
+                    out1.open(dir_name1,std::ios_base::app);
+                    double kpsize;
+                    for (auto kp : keypoints_temp) {
+                        kpsize=kp.size;
+                        std::stringstream ss;
+                        ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) <<  kpsize ;
+                        std::string str = ss.str();
+                        
+                        out1 <<detectorType<<" "<<str<<"\n";
+                    }
+                    out1.close(); 
+
+                    string dir_name="../MP7_PerformanceEvaluation1/mp7_1.txt";
                     ofstream out;
                     out.open(dir_name,std::ios_base::app);
-                    out << " "<<to_string(keypoints_temp.size())<<" "<<str<<"\n";
+                    out << " "<<to_string(keypoints_temp.size())<<" "<<"\n";
                     //out << "This is another line.\n";
                     out.close();   
                 }

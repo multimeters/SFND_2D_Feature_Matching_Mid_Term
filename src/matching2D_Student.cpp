@@ -190,7 +190,7 @@ void detKeypointsShiTomasi(vector<cv::KeyPoint> &keypoints, cv::Mat &img,string 
         ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
         std::string str = ss.str();
 
-        string dir_name="../MP7_PerformanceEvaluation1/out.txt";
+        string dir_name="../MP7_PerformanceEvaluation1/mp7_1.txt";
         ofstream out;
         out.open(dir_name,std::ios_base::app);
         out << "SHITOMASI "<<index<<" "<<to_string(keypoints.size())<<" "<<str;
@@ -291,7 +291,7 @@ void detKeypointsHarris(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, stri
         ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
         std::string str = ss.str();
 
-        string dir_name="../MP7_PerformanceEvaluation1/out.txt";
+        string dir_name="../MP7_PerformanceEvaluation1/mp7_1.txt";
         ofstream out;
         out.open(dir_name,std::ios_base::app);
         out << "HARRIS "<<index<<" "<<to_string(keypoints.size())<<" "<<str;
@@ -382,7 +382,7 @@ void detKeypointsModern(std::vector<cv::KeyPoint> &keypoints, cv::Mat &img, std:
         ss << std::setiosflags(std::ios::fixed) << std::setprecision(3) << 1000 * t / 1.0;
         std::string str = ss.str();
 
-        string dir_name="../MP7_PerformanceEvaluation1/out.txt";
+        string dir_name="../MP7_PerformanceEvaluation1/mp7_1.txt";
         ofstream out;
         out.open(dir_name,std::ios_base::app);
         out << detectorType<<" "<<index<<" "<<to_string(keypoints.size())<<" "<<str;
